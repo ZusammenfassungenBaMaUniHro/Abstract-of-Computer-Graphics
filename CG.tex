@@ -144,6 +144,12 @@
 	\begin{itemize}
 		\item Lineare Independance: a set of vectors are linearly independent $\leftrightarrow \alpha_{1}v_{1}+\alpha_{2}v_{2}+\alpha_{3}v_{3} +\dots = 0$ iff $\alpha_{1}=\alpha_{2}=\alpha_{3}\dots = 0$ thats mean that no vector can be written in combination with the others
 		\item Dimension: in vector space the maximum number of l. independent vectors is fixed and is called the dimension, in an n-dimensional space any set of n linearly independent vectors form a basis, any vector v can be written in combination with basis $v_{1},v_{2},v_{3},\dots,v_{n}$ and $v= \alpha_{1}v_{1}+\alpha_{2}v_{2}+\alpha_{3}v_{3} +\dots+\alpha_{n}v_{n}$ where $\{\alpha_{i}\}$ is unique
+		\item  $v= \alpha_{1}v_{1}+\alpha_{2}v_{2}+\alpha_{3}v_{3} +\dots+\alpha_{n}v_{n}$ the list of scalars $\{\alpha_{1},\alpha_{2},\alpha_{3},\dots,\alpha_{n}\} $calls representation of v with respect to the given basis, can be written in row or column
+		\item Frames: basis + origin = frame, so a frame determined by $(P,v_{1},v_{2},v_{3})$
+		\item every point and vector can be descriped in a frame, Point: $p=[\beta_{1},\beta_{2},\beta_{3}]$, Vector: $b=[\alpha_{1},\alpha_{2},\alpha_{3}]$
+		\item 0 for Vector, 1 for Point, Point: $p=[\beta_{1},\beta_{2},\beta_{3},1]$, Vector: $b=[\alpha_{1},\alpha_{2},\alpha_{3},0]$
+		\item Why this Shit: all transformations can descriped using 4x4 matrices, effective hardware implementation
+		\item How to change coordinate Systems: we can descripe the aiming basis with our current basis CHRISTIAN PICTURE 17 with EQUATIONS, CHRISTIAN PICTURE 18 MAXTRIX
 	\end{itemize}
 	\subsection{Transformations}
 	\subsection{Homogeneous Coordinates}
@@ -175,7 +181,7 @@
 \section{Advanced Rendering}
 	\subsection{Radiosity}
 
-\section{Hierarchies and Parallel Rendering}7
+\section{Hierarchies and Parallel Rendering}
 	 \subsection{Traversal Methods}
 	 \subsection{Scene Graphs}
 	 \subsection{Parallel Rendering}
