@@ -163,6 +163,55 @@
 				\end{itemize}
 			\item OpenGL Camera TODO: 06-10 PIC
 			\item Orthographic Viewing (In the default orthographic view, points are projected forward along the z axis onto the plane z = 0)
+			\item Transformations and Viewing
+				\begin{itemize}
+					\item In OpenGL, projection is carried out by a projection matrix (transformation)	
+					\item There is only one set of transformation functions so we must set the matrix mode first glMatrixMode (GL$\_$PROJECTION)	
+					\item Transformation functions are incremental so we start with	an identity matrix and alter it with a projection matrix that gives the view volume \textbf{glLoadIdentity(); glOrtho(...);}
+				\end{itemize}
+			\item Two- and three-dimensional viewing
+				\begin{itemize}
+					\item In glOrtho(left, right, bottom, top, near, far) the near and far distances are measured from the camera	
+					\item Two-dimensional vertex commands place allvertices in the plane z = 0	
+					\item If the application is in two dimensions, we can use the function gluOrtho2D(left, right,bottom,top)	
+					\item In two dimensions, the view or clipping volume becomes a clipping window
+				\end{itemize}
+			\item OpenGL Primitives\\
+			(GL$\_$POINTS,
+			GL$\_$POLYGON,
+			GL$\_$LINES,
+			GL$\_$LINE$\_$STRIP,
+			GL$\_$LINE$\_$LOOP,
+			GL$\_$TRIANGLES,
+			GL$\_$QUAD$\_$STRIP,
+			GL$\_$TRIANGLE$\_$STRIP,
+			GL$\_$TRIANGLE$\_$FAN)
+			\item OpenGL will only display polygons correctly that are	
+				\begin{description}
+					\item[Simple:] edges cannot cross
+					\item[Convex:] All points on line segment between two points in a polygon are also in the polygon	
+					\item[flat:] all vertices are in the same plane
+				\end{description}
+			\item RGB-Color (in glColor3f the color values range from 0.0 (none) to 1.0 (all), whereas in glColor3ub the values range from 0 to 255)
+			\item Indexed Color (Colors are indices into tables of RGB values Requires less memory)
+			\item The color as set by glColor becomes part of the state and will be used until changed (Colors and other attributes are not part of the object but are assigned when the object is rendered)
+			\item default: smooth shading (OpenGL interpolates vertex colors across visible polygons)
+			\item Alternative: flat shading (Color of first vertex, determines fill color)
+			\item glViewport(x,y,w,h) - Values in pixels (screen coordinates)
+			\item going to 3D means not much changes\\
+			(Use glVertex3*(), Have to worry about the order in which polygons are drawn or use hidden-surface removal)
+			\item Das Sierpinski-Dreieck ist ein beschriebenes Fraktal, welches eine selbstähnliche Teilmenge eines Dreiecks ist. Teilt man das Dreieck in vier zueinander kongruente und zum Ausgangsdreieck ähnliche Dreiecke, deren Eckpunkte die Seitenmittelpunkte des Ausgangsdreiecks sind, dann sind die Teilmengen des Fraktals in den drei äußeren Dreiecken skalierte Kopien des gesamten Fraktals, während das mittlere Teildreieck nicht zum Fraktal gehört. Diese Aufteilung des Fraktals in skalierte Kopien kann in den äußeren Teildreiecken rekursiv fortgesetzt werden. 
+			This is not an ordinary geometric object and it is neither one- nor two-dimensional. Hausdorff dimension: 1.585	
+			\item same in 3D Gasket (Instead of glVertex3f, we can start with a tetrahedron)
+			\item Because the triangles are drawn in the order they are defined in the program, the front triangles are not always rendered in front of triangles behind them
+			\item TODO PIC !!! 07-21
+			\item OpenGL uses a hidden-surface method called the \textbf{z-buffer algorithm} that saves depth information as objects are rendered so that only the front objects appear in the image
+			\item z-buffer algorithm
+				\begin{itemize}
+					\item The algorithm uses an extra buffer, the z-buffer, to store depth information as geometry travels down the pipeline
+				\end{itemize}
+			
+
 		\end{itemize}
 	\subsection{Interaction}
 		
