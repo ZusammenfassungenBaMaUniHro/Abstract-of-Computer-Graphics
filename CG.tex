@@ -125,6 +125,16 @@
 	\subsection{GLUT - OpenGL Utility Toolkit}
 		\begin{itemize}
 			\item  Provides functionality (Open a window, Get input from mouse and keyboard, Menus, Event-driven)
+			\item GLUT function
+				\begin{description}
+					\item[glutInit] allows application to get command line arguments and initializes system
+					\item[gluInitDisplayMode] requests properties for the window (the rendering context) 	
+					\item[glutWindowSize] in pixels
+					\item[glutWindowPosition] from top-left corner of display 	
+					\item[glutCreateWindow] create window with title “simple” 	
+					\item[glutDisplayFunc] display callback
+					\item[glutMainLoop] enter infinite event loop						
+				\end{description}
 		\end{itemize}
 	\subsection{Simple programs in two and three dimensions}
 		\begin{itemize}
@@ -135,6 +145,24 @@
 				\item The display callback is executed whenever OpenGL decides the display must be refreshed, for example when the window is opened
 				\item The main function ends with the program entering an event loop
 			\end{itemize}
+			\item Objectives
+			\item Program Structure \\
+				(Most OpenGL programs have a similar structure that consists of	the following functions)
+				\begin{itemize}
+					\item \textbf{main():} defines the callback functions; opens one or more windows with the required properties; enters event loop (last executable statement)	
+					\item \textbf{init():} sets the state variables	(Viewing, Attributes)
+					\item \textbf{callbacks:} Display function, Input and window functions
+				\end{itemize}
+			\item TODO: 06-5 PIC
+			\item Coordinate Systems
+				\begin{itemize}
+					\item The units in glVertex are determined by the application and are called object or problem coordinates	
+					\item The viewing specifications are also in object	coordinates and it is the size of the viewing volume that determines what will appear in the image	
+					\item Internally, OpenGL will convert to camera (eye) coordinates and later to screen coordinates 	
+					\item OpenGL also uses some internal representations that usually are not visible to the application
+				\end{itemize}
+			\item OpenGL Camera TODO: 06-10 PIC
+			\item Orthographic Viewing (In the default orthographic view, points are projected forward along the z axis onto the plane z = 0)
 		\end{itemize}
 	\subsection{Interaction}
 		
