@@ -249,16 +249,40 @@
 			\includegraphics[scale=0.5]{pictures/rotationz.jpg}
 		\end{center}
 		\item Scaling: expand or contract along each axsis
-		\begin{center}
+			\begin{center}
 			\includegraphics[scale=0.5]{pictures/scaling.jpg}
 		\end{center}		
 		\item Reflection: special case of Scaling, negative scaling variables
 		\item Inverse: compute inverse matricies of tranformation matricies, using simple oberservation we can reduce this complex step
 		\item Concatenation: if we use the same transformation for multiple verticies we can compute a overall transformation matrix using matrix multiplication and use this matrix on all vertices
-
+		\item Rotation about a Fixed Point: Move fixed point to origion, Rorate, move back
 	\end{itemize}
-	\subsection{Homogeneous Coordinates}
-	\subsection{Viewing}
+	\subsection{Transformations in OpenGL}
+	\begin{itemize}	
+		\item in OpenGL matrices are part of the state
+		\item Different Types:
+		\begin{itemize}
+			\item Model-View (GL\_MODELVIEW):defines how your objects are transformed (meaning translation,rotation and scaling) in your world coordinate frame
+			\item Projection (GL\_PROJECTION): defines the properties of the camera that views the objects in the world coordinate frame. Here you typically set the zoom factor, aspect ratio and the near and far clipping planes.
+		\end{itemize}
+		\item select with glMatrixMode one matrix for manipulation
+		\item CTM (current transformation matrix) is a part of the state, applied to all vertices that pass doen the pipeline
+		\item the last descriped operation is first exucuted so. $T+R \neq R+T$
+		\item OpelGl hast a model-view and projection matrix in the pipeline which are concatenated togester to form the CTM, manipulate independent by setting the corrent matrix mode TODO: Picture 11:8
+		\item Matrix-Stacks: with glPushMatrix() and glPopMatrix()
+		\item Model-view Matrix: positioning the camera, build models of objects,
+		\item Project matrix: is used to define the view volume and to select a camera lens
+	\end{itemize}
+	\subsection{Building Models}
+	\begin{itemize}
+		\item Simple: Build a Mesh with Polygons, Problem: ineffcient and unstructured
+		\item Better: look for datastructures that separate the geometry (locations of vertices) from the topology (organizazion of the vertices and edges)
+		\item Vertex List: geometry in array, use pointers from the vertices into this array; Problem: Shared edges in a polygon would drawn twice
+		\item Edge List: descriping edges with verticies
+		\item General Problems with this Approach: many function calls, much more calls if using texture and lightning
+		\item OpenGL provides Vertex Arrays that allow us to store ata in the implementation 
+		\item glDrawElement on indices would replace all glVertex and glColor calls so we have only one function call
+	\end{itemize}
 	\subsection{Shading}
 
 \section{Implementation}
