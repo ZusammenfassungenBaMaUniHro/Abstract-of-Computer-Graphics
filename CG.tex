@@ -226,9 +226,37 @@
 		\item every point and vector can be descriped in a frame, Point: $p=[\beta_{1},\beta_{2},\beta_{3}]$, Vector: $b=[\alpha_{1},\alpha_{2},\alpha_{3}]$
 		\item 0 for Vector, 1 for Point, Point: $p=[\beta_{1},\beta_{2},\beta_{3},1]$, Vector: $b=[\alpha_{1},\alpha_{2},\alpha_{3},0]$
 		\item Why this Shit: all transformations can descriped using 4x4 matrices, effective hardware implementation
-		\item How to change coordinate Systems: we can descripe the aiming basis with our current basis CHRISTIAN PICTURE 17 with EQUATIONS, CHRISTIAN PICTURE 18 MAXTRIX
+		\item How to change coordinate Systems: we can descripe the aiming basis with our current basis 
+		\begin{center}
+			\includegraphics[scale=0.5]{pictures/basis.jpg}
+		\end{center}
+		\item Representing one Frame in Terms of the other:
+		\begin{center}
+			\includegraphics[scale=0.6]{pictures/framechange.jpg}
+		\end{center}		
 	\end{itemize}
 	\subsection{Transformations}
+	\begin{itemize}
+		\item General Transformations: maps points/vectors to other points/vectors
+		\item Translation: move of a point to a new location
+		\begin{center}
+			\includegraphics[scale=0.5]{pictures/translation.jpg}
+		\end{center}
+		\item Rotation: easy pattern you can learn if you know $x^{'} = x*\cos(\theta)-y\sin(\theta); x^{'} = x*\sin(\theta)+y\cos(\theta)$ and the rotation variable dosent change
+		\begin{center}
+			\includegraphics[scale=0.5]{pictures/rotationx.jpg}
+			\includegraphics[scale=0.5]{pictures/rotationy.jpg}
+			\includegraphics[scale=0.5]{pictures/rotationz.jpg}
+		\end{center}
+		\item Scaling: expand or contract along each axsis
+		\begin{center}
+			\includegraphics[scale=0.5]{pictures/scaling.jpg}
+		\end{center}		
+		\item Reflection: special case of Scaling, negative scaling variables
+		\item Inverse: compute inverse matricies of tranformation matricies, using simple oberservation we can reduce this complex step
+		\item Concatenation: if we use the same transformation for multiple verticies we can compute a overall transformation matrix using matrix multiplication and use this matrix on all vertices
+
+	\end{itemize}
 	\subsection{Homogeneous Coordinates}
 	\subsection{Viewing}
 	\subsection{Shading}
