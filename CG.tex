@@ -217,6 +217,51 @@
 		
 \section{Three-Dimensional Graphics}
 	\subsection{Geometry}
+		\begin{itemize}
+			\item We will need three basic elements	(Scalars,Vectors,Points)
+			\item Coordinate-Free Geometry (two triangles are identical if two corresponding sides and the angle between them are identical $\rightarrow$ Physically, points exist regardless of the location of an arbitrary coordinate system)
+			\item \textbf{Scalars} can be defined as members of sets which can be combined by two operations (addition and multiplication) obeying some fundamental axioms (associativity, commutivity, inverses).
+			\item physical definition: a \textbf{vector} is a quantity with two attributes (Direction,Magnitude)
+				\begin{itemize}
+					\item Every vector has an inverse	
+					\item Every vector can be multiplied by a scalar	
+					\item There is a zero vector	
+					\item The sum of any two vectors is a vector
+				\end{itemize}
+			\item Linear Vector Spaces (Mathematical system for manipulating vectors $\rightarrow$ using operations to make expressions like v=u+2w-3r)
+			\item \textbf{Points} are used for Location in space
+			\item operations allowed between points and vectors\\ (Point-point subtraction $\rightarrow$ vector, point-vector addition $\rightarrow$ vector)
+			\item Affine Spaces = Point + a vector space (Vector-vector addition Scalar-vector multiplication Point-vector addition Scalar-scalar operations)
+			\item Lines
+				\begin{itemize}
+					\item Consider all points of the form $P(\alpha)=P_0 + \alpha$\textbf{d}
+					\item Set of all points passing through $P_0$ in direction of the vector \textbf{d}
+					\item Parametric Form is more robust and general than other forms Extends to curves and surfaces
+						\begin{enumerate}
+							\item Explicit: y = mx +h
+							\item Implicit: ax + by +c =0
+							\item Parametric:\\
+							x($\alpha$) = $\alpha x_0$ + (1-$\alpha$)$x_1$ \\
+							y($\alpha$) = $\alpha y_0$  + (1-$\alpha$)$y_1$
+						\end{enumerate}
+					\item If $\alpha >= 0$, then $P(\alpha)$ is the ray leaving $P_0$ in the direction \textbf{d}
+					\item If we use two points to define v, then\\
+						 P($\alpha$) = Q + $\alpha$ (R-Q)=Q+$\alpha$v =$\alpha$R + (1-$\alpha$)Q\\
+						 For $0<=\alpha<=1$ we get all the points on the line segment joining R and Q
+				\end{itemize}			
+			\item An object is \textbf{convex} iff for any two points in the object all points on the line segment between these points are also in the object
+			\item Affine Sums (???)
+			\item \textbf{Convex Hull} is the Smallest convex object containing $P_1, P_2, ..... P_n$ formed by “shrink wrapping” points
+			\item \textbf{Curves} are one parameter entities of the form P($\alpha$) where the function is nonlinear
+			\item \textbf{Surfaces} are formed from two-parameter functions P($\alpha$, $\beta$)	
+			\item A \textbf{plane} can be defined by a point and two vectors or by three points
+			\item \textbf{Normals}
+				\begin{itemize}
+					\item Every plane has a vector n normal (perpendicular, orthogonal) to it	
+					\item From point-two vector form P($\alpha$, $\beta$)=R+$\alpha$u+$\beta$v, we know we can use the cross product to find\\
+					n = u x v and the equivalent form (P($\alpha$)-P)*n=0 	
+				\end{itemize}
+		\end{itemize}
 	\subsection{Representation}
 	\begin{itemize}
 		\item Lineare Independance: a set of vectors are linearly independent $\leftrightarrow \alpha_{1}v_{1}+\alpha_{2}v_{2}+\alpha_{3}v_{3} +\dots = 0$ iff $\alpha_{1}=\alpha_{2}=\alpha_{3}\dots = 0$ thats mean that no vector can be written in combination with the others
