@@ -1,3 +1,4 @@
+
 \documentclass[11pt,a4paper]{article}
 \usepackage{amsmath}
 \usepackage[utf8]{inputenc}
@@ -334,6 +335,70 @@
 	\subsection{Approaches (object vs image space)}
 	\subsection{Implementing the pipeline}
 	\subsection{Clipping}
+		\begin{itemize}
+			\item Must clip out primitives that are outside the view frustum
+			\item Must find which pixels can be affected by each primitive
+			\item Required Tasks
+				\begin{itemize}
+					\item Clipping
+					\item Rasterization or scan conversion
+					\item Transformations 
+					\item Some tasks deferred until fragement processing
+				\end{itemize}
+			\item Rasterization Meta Algorithms\\(2 approaches to rendering a scene with opaque objects)
+				\begin{enumerate}
+					\item For every pixel, determine which object that projects on the pixel is closest to the viewer and compute the shade of this pixel (Ray tracing paradigm)
+					\item For every object, determine which pixels it covers and shade these pixels(Pipeline approach; Must keep track of depths)
+				\end{enumerate}
+			\item Clipping
+				\begin{itemize}
+					\item 2D: against clipping window
+					\item 3D: against clipping volume
+					\item easy: line segments polygons
+					\item hard: curves and text (Convert to lines and polygons first)
+				\end{itemize}
+			\item Clipping 2D Line Segments
+				\begin{itemize}
+					\item Brute force approach: compute intersections with all sides of clipping window
+					$\rightarrow$ Inefficient: one division per intersection
+					\item Cohen-Sutherland Algorithm:
+					\item Idea: eliminate as many cases as possible without computing intersections
+					\item Start with four lines that determine the sides of the clipping window
+					\item Cases
+						\begin{enumerate}
+							\item both endpoints of line segment inside all four lines $\rightarrow$ Draw (accept) line segment as is
+							\item both endpoints outside all lines and on same side of a line $\rightarrow$ Discard (reject) the line segment
+							\item One endpoint inside, one outside $\rightarrow$ Must do at least one intersection
+							\item Both outside $\rightarrow$ May have part inside $\rightarrow$ Must do at least one intersection
+						\end{enumerate}
+					\item Outcodes (For each endpoint, define an outcode $b_0b_1b_2b_3$)//
+					TODO: PIC 19-Folie 11
+					\item using Outcodes\\
+					TODO: PIC 19-Folie 12
+						\begin{enumerate}
+							\item outcode(A) = outcode(B) = 0 $\rightarrow$ Accept line segment
+							\item outcode (C) = 0, outcode(D) $\ne$ 0 $\rightarrow$ Compute intersection
+							\item outcode(E) AND (bitwise) outcode(F) (bitwise) $\ne$ 0\\
+							(Both outcodes have a 1 bit in the same place, Line segment is outside of corresponding side of clipping window; reject)
+							\item GH and IJ: same outcodes, neither zero but logical AND yields zero\\
+							(Shorten line segment by intersecting with one of sides of window; Compute outcode of intersection (new endpoint of shortened line segment); Reexecute algorithm)
+						\end{enumerate}
+				\end{itemize}
+			\item Cohen Sutherland in 3D (Use 6-bit outcodes)
+			\item Liang-Barsky Clipping
+				\begin{itemize}
+					\item Consider the parametric form of a line segment
+					\item Significantly more efficient than Cohen–Sutherland.
+					\item The idea of the Liang-Barsky clipping algorithm is to do as much testing as possible before computing line intersections.
+					\item TODO: 19-Folie 19
+					\item Can accept/reject as easily as with Cohen-Sutherland
+					\item Using values of $\alpha$, we do not have to use algorithm recursively as with C-S
+					\item Extends to 3D
+				\end{itemize}
+			\item General clipping in 3D requires intersection of line segments against arbitrary plane
+			\item TODO PIC 19-Folie 22 und 23
+			\item Normalization is part of viewing (pre clipping) but after normalization, we clip against sides of right parallelepiped Typical intersection calculation now requires only a floating point subtraction, e.g. is $x > x_{max}$?
+		\end{itemize}
 	\subsection{Polygon Fill}
 	
 \section{Discrete Methods}
