@@ -209,10 +209,10 @@
 			\item OpenGL uses a hidden-surface method called the \textbf{z-buffer algorithm} that saves depth information as objects are rendered so that only the front objects appear in the image
 			\item z-buffer algorithm
 				\begin{itemize}
-					\item The algorithm uses an extra buffer, the z-buffer, to store depth information as geometry travels down the pipeline
+					\item Use a buffer called the z or depth buffer to store the depth of the closest object at each pixel found so far
+					\item As we render each polygon, compare the depth of each pixel to depth in z buffer
+					\item If less, place shade of pixel in color buffer and update z buffer
 				\end{itemize}
-			
-
 		\end{itemize}
 	\subsection{Interaction}
 		
@@ -398,6 +398,50 @@
 			\item General clipping in 3D requires intersection of line segments against arbitrary plane
 			\item TODO PIC 19-Folie 22 und 23
 			\item Normalization is part of viewing (pre clipping) but after normalization, we clip against sides of right parallelepiped Typical intersection calculation now requires only a floating point subtraction, e.g. is $x > x_{max}$?
+			\item Polygon Clipping is not as simple as line segment clipping (clipping a convex polygon can yield at most one other polygon)
+			\item One strategy is to replace nonconvex (concave) polygons with a set of triangular polygons (a tessellation)
+			\item as a Black Box (Can consider line segment clipping as a process that takes in two vertices and produces either no vertices or the vertices of a clipped line segment)
+			\item Pipeline Clipping
+				\begin{itemize}
+					\item Clipping against each side of window is independent of other sides
+					\item TODO: 20-Folie 7
+					\item 3D: add front and back clippers (small increase in latency)
+				\end{itemize}
+			\item Bounding Boxes (Rather than doing clipping on a complex polygon, we can use an axis-aligned bounding box or extent $\rightarrow$ Smallest rectangle aligned with axes that encloses the
+			polygon)
+			\item TODO: 20-Folie 10
+			\item Hidden Surface Removal (The elimination of parts of solid objects that are obscured by others)
+				\begin{itemize}
+					\item Object-space approach: use pairwise testing between polygons (objects)
+					\item Painter’s Algorithm (Render polygons a back to front order so that polygons behind others are simply painted over)
+					\item Depth Sort
+						\begin{itemize}
+							\item Requires ordering of polygons first because ot every polygon is either in front or behind all other polygons
+							\item easy cases first, harder later
+							\item Easy Cases (can render independently)\\
+							(A lies behind all other polygons + Polygons overlap in z but not in either x or y)
+							\item Hard Cases\\
+							(cyclic overlap + Overlap in all directions but one is fully on one side of the other + penetration)
+						\end{itemize}
+					\item Back-Face Removal (Culling)
+						\begin{itemize}
+							\item checks the normal vector of every surface to render and throw away surface whose vector points away from the viewer
+							\item 90$^\circ >= \theta$ ($\angle$ normal and vector to viewer)  $>=$ -90$^\circ$
+						\end{itemize}
+					\item Image Space Approach\\
+					(Look at each projector (nm for an n x m frame buffer) and find closest of k polygons)
+				\end{itemize}
+			\item Scan-Line Algorithm\\
+			TODO: 20-Folie 20
+			\item Visibility Testing (to Reduce burden on pipeline and traffic on bus)
+			\item[$\rightarrow$] Partition space with Binary Spatial Partition (BSP) Tree
+				\begin{itemize}
+					\item Can continue recursively\\
+					Plane of C separates B from A\\
+					Plane of D separates E and F
+					\item Can put this information in a BSP tree\\
+					$\rightarrow$ Use for visibility and occlusion testing
+				\end{itemize}
 		\end{itemize}
 	\subsection{Polygon Fill}
 	
@@ -519,7 +563,7 @@
 			\item Front Buffer: display but not written to Back Buffer
 			\item Back Buffer: written to but not displayed
 		\end{itemize}
-		\item request double buffer: glutInitDisplayMode(GL_RGB|GL_DOUBLE)
+		\item request double buffer: glutInitDisplayMode(GL$\_$RGB|GL$\_$DOUBLE)
 		\item at the end of display callback buffers need to be swapped (glutSwapBuffers)
 		\item GLUT callbacks is fixed thats mean you cant change to parameters of an function, work around: using of global variables 
 	\end{itemize}
