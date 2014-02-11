@@ -405,26 +405,134 @@
 	\subsection{Buffers}
 	\subsection{Bitmaps and Pixel Maps}
 	\subsection{Texture Mapping}
+	\begin{itemize}
+		\item GPU can render 10 millio polygons per second, not enough for clouds, grass, terrain or skin
+		\item Example Modeling an Orange: start with orange sphere (to simple), replace sphere with a more complex shape (dimpels usw) $\rightarrow$ a lots of more polygons
+		\item Better Approach: take picture and scan it and paste it on a sphere (texture mapping), Problem: result is smooth, workaround: bump mapping
+		\item Types of Mapping
+			\begin{itemize}
+				\item Texture Mapping: use image to fill a polygon
+				\item Enviroment (reflection mapping): use a picture of the enviroment for texture maps, allows simulation of highly specullar surfaces
+				\item Bump Mapping: emulates altering normal vectors during the rendering
+			\end{itemize}
+		\item Mapping techniques are implemented at the end of the rendering pipeline
+		\begin{center}
+			\includegraphics[scale=0.7]{pictures/mappingpipeline.jpg}
+		\end{center}
+		\item simple idea, but map an image to a surface is complicated (3 or 4 coordinate systems involved)
+		\item Coordinate Systems:
+			\begin{itemize}
+				\item Parametric Coordinates: may be used to model curves and surfaces
+				\item Texture Coordinates: used to identify points in the image to be mapped
+				\item Object or World Coordinates: conceptually where the mapping takes place
+				\item Window Coordinates: final image is really produced
+			\end{itemize}
+		\begin{center}
+			\includegraphics[scale=0.5]{pictures/mappingexample.jpg}
+		\end{center}
+		\item Problem: how to find the maps
+		\item Simple Idea: mapping form texture to coordinates to a point of a surface
+		\item Better: Backward Mapping
+		\item Backward Mapping: given a pixel, we want to know to which on an object it corresponds, given a point on an object we want to know to which point in the texture it corresponds (difficult to find in general)
+		\item Two-part mapping: first map the texture to a simple intermediate surface
+		\begin{center}
+			\includegraphics[scale=0.5]{pictures/cylindermapping.jpg}
+		\end{center}
+		\item Box Mapping: easy to use with simple ortographic projection, used in enviroment maps
+		\begin{center}
+			\includegraphics[scale=0.5]{pictures/boxmapping.jpg}
+		\end{center}
+		\item Second Mapping: map from intermediate object to actual object, normals from intermediate to actual, normals form actual to intermediate, vectors from center if intermediate
+		\begin{center}
+			\includegraphics[scale=0.5]{pictures/secondmapping.jpg}
+		\end{center}
+		\item Aliasing: point sampling of the texture can lead to aliasing errors (TODO: explain)
+		\begin{center}
+			\includegraphics[scale=0.5]{pictures/aliasing.jpg}
+		\end{center}
+		\item Area Averaging: (TODO: explain)
+		\begin{center}
+			\includegraphics[scale=0.5]{pictures/areaaveraging.jpg}
+		\end{center}
+	\end{itemize}
 
 \section{Programmmable Pipelines}
+	\subsection{Backgroudn}
+	\begin{itemize}
+		\item Two Components: Vertex shaders, Fragment shaders
+		\item Geometric Data: set of vetices + type (type: point, line,polygon; vertex data: coordinates, normal bector, texutre coordinates, rgba color and so on)
+		\item Per-Vertex Ops: vertex location are transformed by the model-view matrix into eye coordinates, nromals must be transformed with the inferve transpose of the model-view matrix
+		\item Primitive Assembly: vertices are next to assembled into objects, transformation by projection matrix, clipping (against user defined planes, view volume), perspective diviison, viewport maping
+		\item Rasterization: geometric entitites are rasterized into framgment (fragment corresponds to a point on integer grid a displayed pixel), each fragment has a color, possibly a depth value, texture coordinates
+		\item Vertex Processor: takes vertices (position attribute, possibly color, openGL state), produces position in clip coordinates and vertex color
+		\item Fragment Processor: takes output of rasterizer (fragments), output a fragment, fragments still go through fragments test (hidden surface removal)
+		\item Programmable Shaders: replace fixed function vertex and fragment processing by programmable processors called shaders
+		\item Modeler: outputs geometric model plus information for the renderer (specs of cam, materials, lights), differnet renders (ray tracer, radiosity)
+	\end{itemize}
 	\subsection{Shading Languages}
 	\subsection{GLSL}
-	\subsection{Vertex Shaders}
-	\subsection{Fragment Shaders}
-
+	\begin{itemize}
+		\item Vertex Chader Application: moving vertices (morphing, wave motion, fractals), lightning (more realistic models, cartoon shaders)
+		\item Fragment Shader Application: per fragment lightning calculation, texture mapping
+		\item Vertex Shader Execution Model:
+		\begin{center}
+			\includegraphics[scale = 0.5]{pictures/shaderexecmodel.jpg}
+		\end{center}
+		\item Fragment Shader Execution Model
+		\begin{center}
+			\includegraphics[scale = 0.5]{pictures/fragmentshaderexecmodel.jpg}
+		\end{center}
+	\end{itemize}
+	\subsection{Input and Interaction}
+	\begin{itemize}
+		\item Graphical Input: devices can be described either by pyhsical properties (mouse, keyboard, trackball) or logical properties (a position, an object identifier), modes (how and when input i obtained): request or event
+		\item Devices such as the data teblet return a position directly to the os
+		\item Devices such as the mouse, trackball, joystick return incremental inputs (or velocities) to the OS
+		\item Logical Devices: cant tell from code, couble be keyboard, file, output from other programm
+		\item Graphical Logical Devices: locator (return postion), pick (id of an object), keyboard (string of characters), stroke (array of postions), valuator (floating number), choice (one of n item)
+		\item X Window Input: client-server model for network workstations, client: opengl program, graphics server: bitmap display with a pointing device and a keyboard
+		\item Input Modes: devices contain a trigger which used to send a signal to the os (button on mouse, pressing or relasing a key), then triggered input devices return information to os (mouse return position, keyboard returns ASCII code)
+		\item Request Mode: input provided to programm only when user triggers device 
+		\begin{center}
+			\includegraphics[scale = 0.5]{pictures/requestmode.jpg}
+		\end{center}
+		\item Event Mode: each trigger generates an event, put in an event queue which can be examined by the user program
+		\begin{center}
+			\includegraphics[scale=0.5]{pictures/eventmode.jpg}
+		\end{center}
+		\item Event Types: resize and expose Window, click one or more buttons on Mouse, move mouse Motion, press or release key Keyboard, Idle: no event
+		\item Callbacks: interface for event-driven input, callback function for each type of event which is recordnized by graphics system, user supplied fuction for event
+		\item GLUT callbacks:
+		\begin{itemize}
+			\item glutDisplayFunc: called if window first opend, reshaped, exposed or user decideds it wants to change the display (every programm must have a display callback)
+			\item glutMouseFunc: called if mouse event occurs
+			\item glutReshapeFunc: called if window is reshaped
+			\item glutKeyboardFunc: called if keyboard event occurs
+			\item glutIdleFunc: called if no event is in queue (animations and so on)
+			\item glutMotionFunc, glutPassiveMotionFunc: called if window was moved????(not sure)
+		\end{itemize}
+		\item GLUT Event Loop: puts program in an infinite event loop, each pass through glut looks at events in the queue, for each event glut executes the appropriate callback function if one is defined, if no callback is defined for the event, event is ignored
+		\item Posting redisplays: many events may invoke the display callback funtion (often called redisplay) better use glutPostRedisplay() which sets flag for redisplay. Glut will check it at the end of the event loop
+		\item Animating a Display: start by clearing the window glClear(), problem: drawing of information in the frame buffer is decoupled from the display of its contet, better we can see partially drawn display (only draw what changes)
+		\item Double Buffering: instead of one color buffer, we use two
+		\begin{itemize}
+			\item Front Buffer: display but not written to Back Buffer
+			\item Back Buffer: written to but not displayed
+		\end{itemize}
+		\item request double buffer: glutInitDisplayMode(GL_RGB|GL_DOUBLE)
+		\item at the end of display callback buffers need to be swapped (glutSwapBuffers)
+		\item GLUT callbacks is fixed thats mean you cant change to parameters of an function, work around: using of global variables 
+	\end{itemize}
 \section{Curves and Surfaces}
 	\subsection{Representation of Curves and Surfaces}
 	\subsection{Bézier Curves and Surfaces}
 	\subsection{B-Splines}
-
 \section{Advanced Rendering}
 	\subsection{Radiosity}
-
 \section{Hierarchies and Parallel Rendering}
 	 \subsection{Traversal Methods}
 	 \subsection{Scene Graphs}
 	 \subsection{Parallel Rendering}
-
 \end{document}
 
 	
