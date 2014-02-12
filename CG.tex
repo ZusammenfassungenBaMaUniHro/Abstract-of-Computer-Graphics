@@ -1,4 +1,4 @@
-
+	
 \documentclass[11pt,a4paper]{article}
 \usepackage{amsmath}
 \usepackage[utf8]{inputenc}
@@ -614,6 +614,42 @@
 					\item Can put this information in a BSP tree\\
 					$\rightarrow$ Use for visibility and occlusion testing
 				\end{itemize}
+			\item Rasterization (Determine which pixels that are inside primitive specified by a set of vertices and produces a set of fragments)
+			\item DDA (Digital Differential Analyzer) Algorithm
+				\begin{itemize}
+					\item is used for linear interpolation of variables over an interval between start and end point
+					\item used for rasterization of lines, triangles and polygons
+					\item Line $y=mx+h$ satisfies differential equation\\
+					$\frac{dy}{dx}=m=\frac{\Delta y}{\Delta x}=\frac{y_2-y_1}{x_2-x_1}$
+					\item Problem: for each x plot pixel at closest y (leads to interrupted lines)
+					\item solved: Using Symmetry $\rightarrow$ if m$>$1, swap role of x and y $\rightarrow$ For each y, plot closest x
+				\end{itemize}
+			\item Bresenham’s Algorithm
+				\begin{itemize}
+					\item DDA: one floating point addition per step $\rightarrow$ possible to eliminate all fp
+					\item consider only $1>=m>=0$ otherwise solved by symmetry
+					\item assume pixel centers are at half integers
+					\item after written pixel, only two candidates are possible to come next
+					\item TODO 21-Folie 9 und 10
+					\item For each x, we need do only an integer addition and a test\\
+					$\rightarrow$ Single instruction on graphics chips
+				\end{itemize}
+			\item Polygon Scan Conversion (Fill)
+			\item Winding Number is used to check whether a Point is inside or outside of a Polygon\\
+				(inside if winding number $\ne$ 0)
+			\item Filling in the Frame Buffer (at end of pipeline)
+				\begin{itemize}
+					\item Convex Polygons only
+					\item Nonconvex polygons assumed to have been tessellated
+					\item Shades (colors) have been computed for vertices (Gouraud shading)
+					\item Combine with z-buffer algorithm (March across scan lines interpolating shades; Incremental work small)
+				\end{itemize}
+			\item \textbf{Flood Fill} (can be done recursively if we know a seed point located inside (WHITE)and scan convert edges into buffer in edge/inside color
+			(BLACK) $\rightarrow$ determines the area connected to a given node)
+			\item \textbf{Scan Line Fill} speeds up Flood Fill by filling lines. Instead of pushing each potential future pixel coordinate on the stack, it inspects the neighbour lines (previous and next) to find adjacent segments that may be filled in a future pass; the coordinates (either the start or the end) of the line segment are pushed on the stack. In most cases this scanline algorithm is at least an order of magnitude faster than the per-pixel one.
+			Efficiency: each pixel is checked once.
+			\item Antialiasing by Area Averaging (Color multiple pixels for each x depending on coverage by ideal lineg)
+			\item Aliasing problems can be serious for polygons (Jaggedness of edges + Small polygons neglected)
 		\end{itemize}
 	\subsection{Polygon Fill}
 	
