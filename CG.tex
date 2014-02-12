@@ -213,6 +213,8 @@
 					\item As we render each polygon, compare the depth of each pixel to depth in z buffer
 					\item If less, place shade of pixel in color buffer and update z buffer
 				\end{itemize}
+			
+
 		\end{itemize}
 	\subsection{Interaction}
 		
@@ -782,12 +784,24 @@
 			\item Front Buffer: display but not written to Back Buffer
 			\item Back Buffer: written to but not displayed
 		\end{itemize}
-		\item request double buffer: glutInitDisplayMode(GL$\_$RGB|GL$\_$DOUBLE)
+		\item request double buffer: glutInitDisplayMode$($GL\_RGB$|$GL\_DOUBLE$)$
 		\item at the end of display callback buffers need to be swapped (glutSwapBuffers)
 		\item GLUT callbacks is fixed thats mean you cant change to parameters of an function, work around: using of global variables 
 	\end{itemize}
+	
 \section{Curves and Surfaces}
 	\subsection{Representation of Curves and Surfaces}
+	\begin{itemize}
+		\item until now we worked with flat entities such as lines af flat polygons but the world isnt flat so wee need curves and curved surfaces but hardware can only deals with flat entities so we our implementation need to render them to flat primitives
+		\item Modeling with Curves: want representation taht is stable, smooth, easy to evaluate,
+		\begin{center}
+			\includegraphics[scale=0.5]{pictures/curves.jpg}
+		\end{center}
+		\item explicit Representation: Extension from 2d curves ($y=f(x)$) to 3d curves ($y=f(x),z=g(x)$ so that $z=f(x,y)$ defines a surface) but problems with vertical lines and circles
+		\item Implicit Representation: two dimensional curve ($g(x,y)=0$) so we can define lines and circles (lines: $a*x+b*y+c=0$ and circles: $x^{2}+y^{2}-r^{2}=0$), in 3d $g(x,y,z)=0$ defines a surface, intersect two surfaces to get a curve, Problem: in general we cannot solve for points taht satisfy equation
+		\item Algebraic Surface: $\sum_{i}\sum_{j}\sum_{k}x^{i}*y^{j}*z^{k}=0$, at most 10 Terms, Quadric surface $2 \geq i+j+k$, can solve intersection with ray by reducing problem to solving quadric equation
+		\item Parametric Curves: seperate quation for each spatial variable $x=x(u),y=y(u),z=z(u)$ so $p(u)=[x(u),y(u),z(u)]^{T}$ for $u_{max} \leq u \leq u_{min}$ we trace out a curve in two or three dimensions
+	\end{itemize}
 	\subsection{Bézier Curves and Surfaces}
 	\subsection{B-Splines}
 \section{Advanced Rendering}
