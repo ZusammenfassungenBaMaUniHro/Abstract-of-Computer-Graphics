@@ -659,11 +659,42 @@
 	\subsection{Display Issues}
 		\begin{itemize}
 			\item Light is the part of the electromagn. spectrum between $\sim$ 350-750nm	
-			\item A color C($\lambda$) is a distribution of energies within hthis range	
-			
-
-			
-
+			\item A color C($\lambda$) is a distribution of energies within this range	
+			\item \textbf{Tristimulus Values}
+				\begin{itemize}
+					\item The human visual center has three cones with sensitivity curves $S_1(\lambda)$, $S_2(\lambda)$ and $S_3(\lambda)$
+					\item For a color $C(\lambda)$, the cones output the tristimulus values\\
+					(i = 1,2,3): 
+					$T_i = \int S_i(\lambda)C(\lambda)d\lambda$
+				\end{itemize} 			
+			\item Any two colors with the same tristimulus values are perceived to be identical, but this is not always possible! Because of different primaries (different sensitivity curves) in different systems.
+			\item Problem: different sensitivity curves
+				\begin{itemize}
+					\item Human: curves centered in blue, green, and green-yellow
+					\item CRT: RGB
+					\item Print media: CMY or CMYK	
+				\end{itemize}
+			\item Matching
+				\begin{itemize}
+					\item This T1, T2, T3 is dependent on the particular device	
+					\item If we use another device, we will get different values and these values will not match those of the human cone curves	
+					\item Need a way of matching and a way of normalizing
+					\item Prefer to separate brightness (luminance) from color (chromatic) information
+					\item Reduce to two dimensions
+				\end{itemize}
+			\item Tristimulus Coordinates
+				\begin{itemize}
+					\item For any set of primaries, define: $t_i = \frac{T_i}{T_1 + T_2 + T_3}$
+					\item $t_1 + t_2 + t_3 = 1$
+					\item $1 \ge t_1,t_2,t_3 \ge 0$
+				\end{itemize}
+			\item XYZ
+				\begin{itemize}
+					\item Reference system in which all visible pure spectral colors can be produced	
+					\item Theoretical systems as there are no corresponding physical primaries
+				\end{itemize}
+			\item Color Systems (Most correspond to real primaries)
+			\item Color Transformations (Each additive color system is a linear transformation of another)
 		\end{itemize}
 	
 \section{Discrete Methods}
