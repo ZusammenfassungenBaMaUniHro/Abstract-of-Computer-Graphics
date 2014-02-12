@@ -329,7 +329,179 @@
 		\item OpenGL provides Vertex Arrays that allow us to store ata in the implementation 
 		\item glDrawElement on indices would replace all glVertex and glColor calls so we have only one function call
 	\end{itemize}
-	\subsection{Shading}
+\section{Viewing}
+	 \subsection{Classical Viewing}
+	\begin{itemize}
+		\item basic elements: Objects, viewer with a projection surface, Projectors(from objects to surface)
+		\item classival views are based on relationships between them
+		\item objects are assumed to constructed from fla principal faces
+	\end{itemize}
+	\subsubsection{Planar Geometric Projections}
+	\subsubsection{prallel}
+	\begin{itemize}
+		\item multiview orthographic
+		\begin{itemize}
+			\item projectors are orthogonal to projection surface
+			\item projection plan parallel to principal face
+			\item front, top, side views
+			\item advantages: preserves distance and angles $\rightarrow$ shapes preserved, can be used for measurements
+			\item disadvantages: cannot see what object realy looks like because many surfaces are hidden from view
+		\end{itemize}
+		\item axonometric
+		\begin{itemize}
+			\item allow projection plane to move realtive to object
+			\item classify by how many angles of a corner of a projected cube are the same (none: trimetric, two: dimetric, three: isometric)
+			\item advantages and disadvantages: lines are scaled but can find scaling factors, line preserved but angles are not, can see principal faces of box-like object, some optical 				illusions are possible, does not look real
+		\end{itemize}
+		\item oblique
+		\begin{itemize}
+			\item arbitrary relationship between projectors and projection plane
+			\item advantages and disadvantages: can pick the angles to emphasize a particular face, angles in faces parallel to projection preserved while we ca still see around side, 
+			cannot create with simple camera
+		\end{itemize}
+	\end{itemize}
+	\subsubsection{perspective}
+	projectors converge at center of projection
+	\begin{itemize}
+		\item vanishing points: prallel lines on the object converge at a single point in the projection
+		\item drawing simple perspectives by hand uses these vanishing points
+		\item three-point perspective
+		\begin{itemize}
+			\item no principal face parallel to projection
+			\item three vanishing points for cube
+		\end{itemize}
+		\item two-point perspective
+		\begin{itemize}
+			\item on principal direction parallel to projection plane
+			\item two vanishing points for cube
+		\end{itemize}
+		\item one-point perspective
+		\begin{itemize}
+			\item one principal face parallel to projection plane
+			\item one vanishing point for cube
+		\end{itemize}
+		\item advatages and disadvantages: obejects further from viewer are projected smaler than the same sized objects closer to the viewer, equal distances along a line are not 				projected into equal distances, angles preserved only in planes parallel to the projection plane, difficult to construct by hand
+	\end{itemize}
+
+	\subsection{Computer Viewing}
+	three aspects implemented in the pipeline: positioning the camera(model-view matrix); selecting a lens(projection matrix); clipping(view volume)
+	\subsection{Parallel Rendering}
+
+\section{Projection}
+\subsection{Normalization}
+\begin{itemize}
+	\item convert all projections to orthogonal projections
+	\item Why?
+	\begin{itemize}
+		\item allows for a single pipeline perspective and orthogonal viewin0g
+		\item stays in 4D homogeneous coordinates as long as possible $\rightarrow$ retain 3D informations (for hidden-surface and shading)
+		\item simplifies clipping
+	\end{itemize}
+	\item pipeline view: modelview transf. $\rightarrow$ projection transf.  $\rightarrow$  perspective division (4D to 3D) $\rightarrow$  clipping  $\rightarrow$ projection(3D to 2D)
+\end{itemize}
+
+
+\section{Shading}
+\begin{itemize}
+	\item light-material interactions cause each point to have diffrent color or shade
+	\item need to consider: light sources, material properties, location of viewer, surface oriantation
+	\item scattering: light strikes surface $\rightarrow$ some scattered, some absorbed $\rightarrow$  scattered light strikes other surface and so on
+	\item rendering equation
+	\begin{itemize} 
+		\item global
+		\item includes shadows, multiple scattering from object to object, translucent surfaces
+		\item cannot be solved in general, ray tracing is special case for perfectly reflecting surfaces
+		\item $I(x,x')=g(x,x')[ \epsilon (x,x')+ \int_s \rho (x,x',x'')I(x',x'')dx'']$
+		\begin{itemize}
+			\item $I(x,x')$ Intesity of light from $x'$ to $x$
+			\item $g(x,x')$ Visibility function between $x$ an $x'$
+			\item $\epsilon(x,x')$ Transfer emittance from $x'$ to $x$
+			\item $\rho(x,x')$ Scattering term with respect tp direction $x'$ and $x''$
+			\item cannot be evaluated analytically
+		\end{itemize}
+	
+	\end{itemize}
+	\item local vs global rendering
+	\begin{itemize}
+		\item correct shading requires global calculation involving all objects and light sources(incompatible with pipeline)
+		\item many technics for approximating global effects $\rightarrow$ objects "look right"
+	\end{itemize}
+	\item light-material interaction
+	\begin{itemize}
+		\item light strikes object, is partially absorbend and reflected
+		\item amount of reflected light determines color and brightness
+		\item reflected light scattered in a manner that depends on smoothness and oriantion of the surface
+	\end{itemize}
+	\item light sources
+	\begin{itemize}
+		\item difficult to work with, because light comes from all points of the source
+		\item point source: model with position and color,  distant source
+		\item spotlight: restrict light from ideal point source
+		\item ambient light: same amount of light everywhere in scene, can model contribution of many sources
+	\end{itemize}
+	\item surfaces: smother $\rightarrow$  reflected light is concentrated; rougher $\rightarrow$ light scatters in all directions
+	\item phong model
+	\begin{itemize}
+		\item simple model
+		\item components: diffus, specular, ambient
+		\item 4 vectors: to source, to viewer, normal, perfect reflector
+	\end{itemize}
+	\item ideal reflector
+	\begin{itemize}
+		\item nomal vector is determined by local oriantation, angle of incidence = angle of relection, vectors must be coplanar
+		\item $r=2(l*n)n-l$
+	\end{itemize}
+	\item lambertian surface
+	\begin{itemize}
+		\item perfectly diffuse reflector
+		\item light scattered equally in all directions
+		\item amount of light reflected is proportional to the vertical component of incoming light
+	\end{itemize}
+	\item specular surfaces
+	\begin{itemize}
+		\item most surfaces are neither ideal diffusers nor perfectly specular 
+		\item smooth surfaces show specular highlights due to incoming light being reflected in directions concentrated clos to the direction of a perfect reflection
+	\end{itemize}
+	\item modeling specular relections: $I_{r} \sim k_s I cos^{\alpha}\phi$, (reflected intensity, ansorbtion coef, incoming intensity, schininess coeff)
+	\item shininess coefficient:	values between 5 and 10 give surface that look like plastic, values of a between 100 and 200 correspond to metals
+	\item ambient light
+	\begin{itemize}
+		\item result of multiple interactions between light sources and objects
+		\item amount and color depend on color of lights and material properties of objects
+	\end{itemize}
+	\item distance terms: light from a point source that reaches surface is inversely propotional to the square of the distance
+	\item light sources
+	\begin{itemize}
+		\item in phong model $\rightarrow$ add result of each light source
+		\item each light source has seperate diffuse, specular and ambient terms (no physical justification)
+		\item separate red, green, blue components
+	\end{itemize}
+	\item material properties: match light source properties (nine absorbation coefficients, shininess coefficient)
+	\item modified phong model
+	\begin{itemize}
+		\item specular term is problematic, because it requires calculation of new reflection and view vectors for each vertex\\
+		$\rightarrow$ approximation using halfway vector (h)
+		\item $h=(l+v)/|l+v|$
+		\item l, v specified by application, problem is determing n
+		\item plane normals: three points $\rightarrow$  $n=(p_2-p_0)\times(p_1-p_0)$
+		\item normal to sphere: given by gradient
+		
+	\end{itemize}
+	\item shading in OpenGL
+	\begin{itemize}
+		\item steps: enable shading and select model; specify normals; specify material properties; specify lights
+		\item normals: part of state, usually we want normal to have unit length so calculations are correct
+		\item front and back faces: default $\rightarrow$ only front faces are shaded, if two sided lightning $\rightarrow$ both sides are shaded, each side has its own properties
+		\item emissive term: simulate light source by giving material emissive component (uneffected by other sources)
+		\item transparancy: matrial properties specified as RGBA values (A for transparency)
+		\item efficiency: many material changes can affect performance
+		\item polygonal shading: calculation done for each vertex, default $\rightarrow$ vertex shades interpolated across the polygon
+		\item Gouraud Shading: find avarage normal at each vertex; apply modified phng model; interpolate vertex shades across each polygon\\
+			if polygon mesh approximates surfaces with high curvatures $\rightarrow$ may show edges
+		\item Phong Shading: find vertex normals, interpolate vertex normals across edges; interpolate edge normals across polygon; apply modified phong model\\
+			if polygon mesh approximates surfaces with high curvatures $\rightarrow$ may look smooth; more work (until recently not available real-time systems)
+	\end{itemize}
+\end{itemize}
 
 \section{Implementation}
 	\subsection{Approaches (object vs image space)}
