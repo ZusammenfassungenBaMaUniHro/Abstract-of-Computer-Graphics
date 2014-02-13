@@ -58,7 +58,7 @@
 			\item Programmiers Interface:
 			\begin{itemize}
 				\item API
-				\item specifiy what we nee to form an image (objects, viewer, light sources, materials), handling input from devices
+				\item specifiy what we need to form an image (objects, viewer, light sources, materials), handling input from devices
 				\item Object Specification: limited set of primitives (points, line segments, polygons, some surfaces)
 				\item Camera Specification: postion of center of lens, orientations, lens, film size, orientation of film plane
 				\item Light: different types of lights (point lights, spot light, near and far sources, color properties)
@@ -75,7 +75,7 @@
 			\item one point is visable if we hit light source form point
 			\item in case of reflection follow rays from transmitting surfaces, recursive process
 			\item Structure: recursivly, calculate for each ray, find intersection with closet surfaces (need object datebase, complexity of calculation limits of object types), compute lightnig at surface, trace reflected and transmittet rays
-			\item stop of procedure if no track amout left (some light will be absorbed at each intersetion with object), ignore rays that go of to infinity (workaround, large absorbing sphere around problem), cout steps
+			\item stop of procedure if no track amout left (some light will be absorbed at each intersetion with object), ignore rays that go of to infinity (workaround, large absorbing sphere around sceme), cout steps
 			\item color of pixel is the result of local+reflected+transmitted
 			\item Computing Intersections, solve equations with maybe nurmerical methods 
 			\item easy calculation with planes
@@ -154,7 +154,9 @@
 					\item \textbf{init():} sets the state variables	(Viewing, Attributes)
 					\item \textbf{callbacks:} Display function, Input and window functions
 				\end{itemize}
-			\item TODO: 06-5 PIC
+			\begin{center}
+				\includegraphics[scale=0.5]{pictures/exsampleglut.jpg}
+			\end{center}
 			\item Coordinate Systems
 				\begin{itemize}
 					\item The units in glVertex are determined by the application and are called object or problem coordinates	
