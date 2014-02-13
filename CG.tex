@@ -1028,11 +1028,168 @@
 		\item Basis splines: use the data at $p=[p_{i-2},p_{i-1},p_{i},p_{i+1}]^{T}$ to define a curve only between $p_{i-1}$ and $p_{i}$, cost 3 times as much fork, for surfaces 9 times as much work
 	\end{itemize}
 \section{Advanced Rendering}
-	\subsection{Radiosity}
-\section{Hierarchies and Parallel Rendering}
-	 \subsection{Traversal Methods}
-	 \subsection{Scene Graphs}
-	 \subsection{Parallel Rendering}
+
+\section{Radiosity}
+\begin{itemize}
+	\item ray tracing is best with many highly specular surfaces (unrealistic for real scenes)
+	\item rendering equation descripes general shading problem
+	\item radiosity solves rendering equation for perfectly diffuse surfaces
+\end{itemize}
+\subsection{terminology}
+\begin{itemize}
+	\item TODO
+\end{itemize}
+\subsection{redering equation}
+\begin{itemize}
+	\item is energy balanced
+	\item integrate over hemisphere
+	\item fredholm integral equation
+	\item TODO: PIC 
+	\item various approximations of $\rho$ give standard rendering models
+	\item occlusion term to account for other objects blocking licht from reaching surface
+\end{itemize}
+\subsection{radiosity}
+\begin{itemize}
+	\item consider objects broken up into flat patches
+	\item assume that patches are perfectly diffuse reflectors
+	\item radiosity = flux = energy/unit area/unit time leavin patch
+\end{itemize}
+\subsection{hemisphere}
+\begin{itemize}
+	\item use illuminating hemisphere
+	\item center hemisphere on patch wirh nomal pointung up
+	\item must shift hemisphere for each point on patch
+\end{itemize}
+\subsection{hemicube}
+\begin{itemize}
+	\item easier to use instead of hemisphere
+	\item rule each side into pixels
+	\item easier to project pixels which give delta form factors that can be added up to gice desired form factor
+	\item to get a delto form factor, only cast a ray throgh each pixel
+\end{itemize}
+\subsection{instant radiosity}
+\begin{itemize}
+	\item use graphics system if possible
+	\item make each patch emissive
+	\item light from this patch is distributed among the other patches
+	\item shade of other patches = form factors
+	\item must use multiple OpenGL point sources to approximate a uniformly emissive patch
+\end{itemize}
+
+\section{Parallel Rendering}
+\subsection{Why?}
+\begin{itemize}
+	\item standard rendering pipeline may not be sufficent
+	\item use commodity components to build a system that can render in parallel
+	\item use standard network to connect
+\end{itemize}
+\subsection{Power Wall}
+\begin{itemize}
+	\item need solution comparable to data set to see detail (Ocean Data, CT)
+	\item solution: multiple projectors (commodity, high-end)
+	\item inexpensive soultion
+	\item problems: bezels, color matching, alignment, syncing
+\end{itemize}
+\subsubsection{Tiled Display Wall}
+\begin{itemize}
+	\item 6-node rendering cluster
+	\item 1 head node
+	\item 24 LCD Tiles
+	\item gigabit ethernet
+\end{itemize}
+\subsubsection{data distribution models}
+\begin{itemize}
+	\item master-slave
+	\begin{itemize}
+		\item master (app, render, I/O) $\leftrightarrow$ network $\leftrightarrow$ slaves(app, render)
+	\end{itemize}
+	\item client-slave
+	\begin{itemize}
+		\item client (application, I/O) $\rightarrow$ network $\rightarrow$ servers (rendering)
+	\end{itemize}
+\end{itemize}
+\subsubsection{graphics architectures}
+Transform $\rightarrow$ Clip  $\rightarrow$ Project/Sort  $\rightarrow$ Rastarize  $\rightarrow$ Screen
+\subsubsection{building blocks}
+\begin{itemize}
+	\item graphic prozessors consist of geometric blocks and rasterizers
+	\item gemometric units: transformations, clipping, lightning
+	\item rasterization: scan conversion, shading
+	\item parallize by using multiple blocks
+\end{itemize}
+\subsubsection{sorting pradigm}
+\begin{itemize}
+	\item each projector is responsible for one area of the screen $\rightarrow$ sort primitives and assign them to proper screen	
+	\item rendering methods TODO: PICTURE
+	\item sort first: appealing and easy to implement
+	\item sort middle: used in hardware pipelines, more difficult to implement with add-on commodity cards
+	\item sort last: easy to implement with a compositing stage, high network traffic
+\end{itemize}
+\section{multipass rendering and shadows}
+\subsubsection{accumulation buffer}
+\begin{itemize}
+	\item not available for writing directly
+	\item place to holt and compute on pixel data
+	\item operations: load contents of a color buffer, accumulate the contents of a color buffer, return buffer contents to a color buffer, add or multiply all pixel values
+	\item use: improve scene qualitiy (motion blur, depth of field, soft shadows, scene antialising, bump mapping)
+\end{itemize}
+
+\section{visualization of implicit functions}
+\subsection{displaying implicit functions}
+\begin{itemize}
+	\item consider the implicit function $g(x,y)=0$
+	\item given an $x$ $\rightarrow$ cannot for a corresponding  $y$
+	\item given $x$ and $y$ $\rightarrow$ can test if they are on the curve
+\end{itemize}
+\subsection{height fields and contours}
+\begin{itemize}
+	\item in many applications, heights by function of the form $z=f(x,y)$
+	\item to find alle the points that have given $c$, have to solve $g(x,y)=f(x,y)-c=0$
+	\item functions determines the isosurfaces or contours of $f$ for the isosurface value $c$
+\end{itemize}
+\subsection{marching squares}
+\subsection{displaying implicit functions}
+\begin{itemize}
+	\item TODO
+	\item 
+	\item 
+\end{itemize}
+\subsection{matching cubes}
+TODO...
+
+\section{shadows}
+\begin{itemize}
+	\item important visual cue for realism
+	\item light projects shadow casto onto shadowed surface
+	\item can be considered as areas hidden from light source
+	\item shadow on A due to B can be found by projecting B onto A with light as center of projection
+	\item for scenes with static lights and geometry $\rightarrow$ shadows are fixed
+	\item point lights have hard edges, area lights have soft edges
+end{itemize}
+\subsection{shadow polygons}
+\begin{itemize}
+	\item cast shadows on flat surfaces
+	\item make shadow polygons $\rightarrow$ squash shadow caster onto the plane
+	\item draw shadow polygons with ambient light only
+	\item light can be infinite or local
+	\item sqaushing done by multiplying transformation to model view matrix
+	\item one pass for each shadowed plane
+	\item algorithm:
+	\begin{itemize}
+		\item draw surface without shadow
+		\item turn off texturing, lightning
+		\item turn on ambient light only
+		\item apply squashing transform
+		\item draw shadow polygons
+	\end{itemize}
+	\item tradoff
+	\begin{itemize}
+		\item pro: easy to make shadow polygons
+		\item con: shadowed surface must be flat
+	\end{itemize}
+\end{itemize}
+\end{itemize}
 \end{document}
+
 
 	
