@@ -638,6 +638,9 @@
 					\item For each x, we need do only an integer addition and a test\\
 					$\rightarrow$ Single instruction on graphics chips
 				\end{itemize}
+		\end{itemize}
+	\subsection{Polygon Fill}
+		\begin{itemize}
 			\item Polygon Scan Conversion (Fill)
 			\item Winding Number is used to check whether a Point is inside or outside of a Polygon\\
 				(inside if winding number $\ne$ 0)
@@ -655,10 +658,108 @@
 			\item Antialiasing by Area Averaging (Color multiple pixels for each x depending on coverage by ideal lineg)
 			\item Aliasing problems can be serious for polygons (Jaggedness of edges + Small polygons neglected)
 		\end{itemize}
-	\subsection{Polygon Fill}
+	\subsection{Display Issues}
+		\begin{itemize}
+			\item Light is the part of the electromagn. spectrum between $\sim$ 350-750nm	
+			\item A color C($\lambda$) is a distribution of energies within this range	
+			\item \textbf{Tristimulus Values}
+				\begin{itemize}
+					\item The human visual center has three cones with sensitivity curves $S_1(\lambda)$, $S_2(\lambda)$ and $S_3(\lambda)$
+					\item For a color $C(\lambda)$, the cones output the tristimulus values\\
+					(i = 1,2,3): 
+					$T_i = \int S_i(\lambda)C(\lambda)d\lambda$
+				\end{itemize} 			
+			\item Any two colors with the same tristimulus values are perceived to be identical, but this is not always possible! Because of different primaries (different sensitivity curves) in different systems.
+			\item Problem: different sensitivity curves
+				\begin{itemize}
+					\item Human: curves centered in blue, green, and green-yellow
+					\item CRT: RGB
+					\item Print media: CMY or CMYK	
+				\end{itemize}
+			\item Matching
+				\begin{itemize}
+					\item This T1, T2, T3 is dependent on the particular device	
+					\item If we use another device, we will get different values and these values will not match those of the human cone curves	
+					\item Need a way of matching and a way of normalizing
+					\item Prefer to separate brightness (luminance) from color (chromatic) information
+					\item Reduce to two dimensions
+				\end{itemize}
+			\item Tristimulus Coordinates
+				\begin{itemize}
+					\item For any set of primaries, define: $t_i = \frac{T_i}{T_1 + T_2 + T_3}$
+					\item $t_1 + t_2 + t_3 = 1$
+					\item $1 \ge t_1,t_2,t_3 \ge 0$
+				\end{itemize}
+			\item XYZ
+				\begin{itemize}
+					\item Reference system in which all visible pure spectral colors can be produced	
+					\item Theoretical systems as there are no corresponding physical primaries
+				\end{itemize}
+			\item Color Systems (Most correspond to real primaries)
+			\item Color Transformations (Each additive color system is a linear transformation of another)
+		\end{itemize}
 	
 \section{Discrete Methods}
 	\subsection{Buffers}
+		\begin{itemize}
+			\item Define a \textbf{buffer} by its spatial resolution (n x m) and its depth (or precision) k, the number of bits/pixel
+			\item OpenGL Buffers:
+				\begin{itemize}
+					\item Color buffers can be displayed (Front-, Back-, Auxiliary-, Overlay)
+					\item Depth
+					\item Accumulation (High resolution buffer)
+					\item Stencil (Holds masks)
+				\end{itemize}
+			\item Writing in Buffers
+				\begin{itemize}
+					\item Consideration: memory is a large two-dimensional array of pixels
+					\item TODO: 22-Folie 6
+					\item Read destination pixel before writing source 
+					\item TODO: 22-Folie 7+8
+					\item XOR is especially useful for swapping blocks of memory such as menus that are stored off screen. If S represents screen and M represents a menu the sequence\\
+					S $\rightarrow$ S $\oplus$ M, 
+					M $\rightarrow$ S $\oplus$ M, 
+					S $\rightarrow$ S $\oplus$ M swaps the S and M
+				\end{itemize}
+			\item The Pixel Pipeline
+				\begin{itemize}
+					\item Writing pixels involves
+						\begin{itemize}
+							\item Moving pixels from processor memory to the frame buffer
+							\item Format conversions
+							\item Mapping, Lookups, Tests
+						\end{itemize}
+					\item Reading pixels (Format conversion)
+					\item TODO 20-Folie 10
+				\end{itemize}
+			\item Raster Position (part of the state, \textbf{glRasterPos*()})
+				\begin{itemize}
+					\item The raster position is a geometric entity
+					\item Passes through geometric pipeline
+					\item Eventually yields a 2D position in screen coordinates
+					\item This position in the frame buffer is where the next raster primitive is drawn
+				\end{itemize}			
+			\item Buffer Selection (Default: back buffer)
+				\begin{itemize}
+					\item Change with glDrawBuffer and glReadBuffer
+					\item format of the pixels in the frame buffer is different
+					from that of processor memory and reside in different places\\
+					$\rightarrow$ Need packing/unpacking + Drawing and reading can be slow
+				\end{itemize}
+			\item \textbf{Bitmaps} (1-bit pixels) are masks that determine if the corresponding pixel
+			in the frame buffer is drawn with the present raster color\\(0 $\rightarrow$ color unchanged + 1 $\rightarrow$ color changed based on writing mode)
+			\item TODO: 22-Folie 15
+			\item Pixel Maps (rectangular arrays of pixels)
+				\begin{itemize}
+					\item Pixels are in 1 byte chunks\\
+					(Luminance (gray scale) images 1 $\frac{byte}{pixel}$ + RGB 3 $\frac{bytes}{pixel}$)
+					\item Draw pixels: processor memory to frame buffer
+					\item Read pixels: frame buffer to processor memory
+					\item Copy pixels: frame buffer to frame buffer
+				\end{itemize}
+			\item Image Formats $\rightarrow$ OpenGL knows nothing of image formats
+			\item PPM is a very simple format(Each image file consists of a header followed by all the pixel data)
+		\end{itemize}
 	\subsection{Bitmaps and Pixel Maps}
 	\subsection{Texture Mapping}
 	\begin{itemize}
