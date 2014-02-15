@@ -17,8 +17,6 @@
 		\begin{itemize}
 			\item deals with all aspect of image creation with computers
 		\end{itemize}
-	\subsection{Application Areas}
-	\subsection{History}
 	\subsection{Image formation}
 		\begin{itemize}
 			\item form images on a two dimensional device analogous how images are formed by physical systems (Cameras and so on)
@@ -26,7 +24,7 @@
 			\item Ray Tracing: follow rays from light with maybe collusions with object to lens (camera) or going to infinity
 			\item Luminance Image: Monochromatic (grey levels) like black-white-films
 			\item Color Image: perceptional attributes (hue, saturation, lightness)
-			\item Additive Color: adding amouts of three primaries (RGB), Monitor
+			\item Additive Color: adding amounts of three primaries (RGB), Monitor
 			\item Subtractive Color: form color by filter white light (CYM), Printing
 			\item Pinhole Camera: use trigonometry to find project 
 			\begin{center}
@@ -34,17 +32,17 @@
 			\end{center}
 			\item Synthetic Camera: projection of image on image plane, camera views on image plane ?????
 			\item Advantages of SC: separation of objects, viewer, light sources, two-dimensional graphics is a special case of three-dimensional graphics, simple api with fast hardware implementation
-			\item cant compute color or shade of each object independently reasons: blocked form light, reflects, translucent
-			\item disadvantages of ray tracing: easy calculation for easy object, but on compley objects FUCK UP especially with lights and shadows
+			\item cant compute color or shade of each object independently reasons: blocked from light, reflects, translucent
+			\item disadvantages of ray tracing: easy calculation for easy object, but on complex objects FUCK UP especially with lights and shadows
 		\end{itemize}
 	\subsection{Basic Architecture} 
 		\begin{itemize}
-			\item Physical Approaches: RayTracing = SLOW, can handle global effects; Radiosity: Energy based approaced = MUCH SLOWER
+			\item Physical Approaches: RayTracing = SLOW, can handle global effects; Radiosity: Energy based approach = MUCH SLOWER
 			\item Practical Approaches: process one object at time, can only handle local lightning, pipeline architecture
 			\begin{center}
 				\includegraphics[scale=0.5]{pictures/pic4.jpg}
 			\end{center}
-			\item Vertex Processing: much work is converting object representations form one coordinate system to another (Object Coordinates, Camera Coordinates, Screen Coordinates)
+			\item Vertex Processing: much work is converting object representations from one coordinate system to another (Object Coordinates, Camera Coordinates, Screen Coordinates)
 			\begin{itemize}
 				\item Projection: combines 3D viewer with the 3D objects to produce the 2D image
 				\item Perspective Projection: all Projectors meet the center of projection
@@ -55,13 +53,13 @@
 				\item Clipping: a real camera cannot see the whole world, objects that are not within this volume are said to be clipped out of the scene
 			\end{itemize}
 			\item Rasterization: create fragments (potential pixels), fragments have locations in frame buffer, color and depth attributes, vertex attributes are interpolated over objects by the rasterizer
-			\item Fragment Processing: fragments are processed to determinate the color of pixel in frame buffer, color determined by texture mapping or interpolation of vertex colors, fragments may blocked by other fragments coloser to camera (hidden surface removal)
-			\item Programmiers Interface:
+			\item Fragment Processing: fragments are processed to determinate the color of pixel in frame buffer, color determined by texture mapping or interpolation of vertex colors, fragments may blocked by other fragments closer to camera (hidden surface removal)
+			\item Programmers Interface:
 			\begin{itemize}
 				\item API
-				\item specifiy what we need to form an image (objects, viewer, light sources, materials), handling input from devices
+				\item specify what we need to form an image (objects, viewer, light sources, materials), handling input from devices
 				\item Object Specification: limited set of primitives (points, line segments, polygons, some surfaces)
-				\item Camera Specification: postion of center of lens, orientations, lens, film size, orientation of film plane
+				\item Camera Specification: position of center of lens, orientations, lens, film size, orientation of film plane
 				\item Light: different types of lights (point lights, spot light, near and far sources, color properties)
 				\item Material: absorption, diffuse, specular
 			\end{itemize}
@@ -73,16 +71,16 @@
 			\item Ray Casting: rays goes from view to scene, one ray for one pixel
 			\item objects are build from primitives and set operations with other objects
 			\item Ray is parametric, Sphere is quadric (quadric is a solution set of quadratic functions), Resulting equations is a entry/exit point or no solution if ray misses
-			\item one point is visable if we hit light source form point
+			\item one point is visible if we hit light source form point
 			\item in case of reflection follow rays from transmitting surfaces, recursive process
-			\item Structure: recursivly, calculate for each ray, find intersection with closet surfaces (need object datebase, complexity of calculation limits of object types), compute lightnig at surface, trace reflected and transmittet rays
-			\item stop of procedure if no track amout left (some light will be absorbed at each intersetion with object), ignore rays that go of to infinity (workaround, large absorbing sphere around sceme), cout steps
+			\item Structure: recursively, calculate for each ray, find intersection with closet surfaces (need object database, complexity of calculation limits of object types), compute lighting at surface, trace reflected and transmitted rays
+			\item stop of procedure if no track amount left (some light will be absorbed at each intersection with object), ignore rays that go of to infinity (workaround, large absorbing sphere around scene), count steps
 			\item color of pixel is the result of local+reflected+transmitted
-			\item Computing Intersections, solve equations with maybe nurmerical methods 
+			\item Computing Intersections, solve equations with maybe numerical methods 
 			\item easy calculation with planes
-			\item polyhedra build from planes
+			\item polyhedron build from planes
 			\item ray enters at furthest intersection with front facing plane, leaves at closest intersection with back facing planes,
-			\item if entry is further away then exit,ray muss miss the polehedron
+			\item if entry is further away then exit,ray muss miss the polyhedron
 		\end{itemize}
 
 \section{Basic OpenGL}
@@ -142,7 +140,6 @@
 		\begin{itemize}
 			\item  Event Loop
 			\begin{itemize}
-				\item Note that the program defines a display callback function named mydisplay
 				\item Every glut program must have a display callback
 				\item The display callback is executed whenever OpenGL decides the display must be refreshed, for example when the window is opened
 				\item The main function ends with the program entering an event loop
@@ -182,7 +179,7 @@
 			\item Two- and three-dimensional viewing
 				\begin{itemize}
 					\item In glOrtho(left, right, bottom, top, near, far) the near and far distances are measured from the camera	
-					\item Two-dimensional vertex commands place allvertices in the plane z = 0	
+					\item Two-dimensional vertex commands place all vertices in the plane z = 0	
 					\item If the application is in two dimensions, we can use the function gluOrtho2D(left, right,bottom,top)	
 					\item In two dimensions, the view or clipping volume becomes a clipping window
 				\end{itemize}
@@ -206,13 +203,14 @@
 			\item Indexed Color (Colors are indices into tables of RGB values Requires less memory)
 			\item The color as set by glColor becomes part of the state and will be used until changed (Colors and other attributes are not part of the object but are assigned when the object is rendered)
 			\item default: smooth shading (OpenGL interpolates vertex colors across visible polygons)
+
 			\item Alternative: flat shading (Color of first vertex, determines fill color)
-			\item glViewport(x,y,w,h) - Values in pixels (screen coordinates)
+			\begin{center}
+				\includegraphics[scale=0.3]{pictures/smathfloothshading.jpg}
+			\end{center}
+			\item glViewport(x,y,w,h) - Values in pixels (screen coordinates, x and y upper left edge of window, wh width and hight of window)
 			\item going to 3D means not much changes\\
 			(Use glVertex3*(), Have to worry about the order in which polygons are drawn or use hidden-surface removal)
-			\item Das Sierpinski-Dreieck ist ein beschriebenes Fraktal, welches eine selbstähnliche Teilmenge eines Dreiecks ist. Teilt man das Dreieck in vier zueinander kongruente und zum Ausgangsdreieck ähnliche Dreiecke, deren Eckpunkte die Seitenmittelpunkte des Ausgangsdreiecks sind, dann sind die Teilmengen des Fraktals in den drei äußeren Dreiecken skalierte Kopien des gesamten Fraktals, während das mittlere Teildreieck nicht zum Fraktal gehört. Diese Aufteilung des Fraktals in skalierte Kopien kann in den äußeren Teildreiecken rekursiv fortgesetzt werden. 
-			This is not an ordinary geometric object and it is neither one- nor two-dimensional. Hausdorff dimension: 1.585	
-			\item same in 3D Gasket (Instead of glVertex3f, we can start with a tetrahedron)
 			\item Because the triangles are drawn in the order they are defined in the program, the front triangles are not always rendered in front of triangles behind them\\
 			\begin{center}
 				\includegraphics[scale=0.5]{pictures/AlmostCorrect.jpg}
@@ -224,17 +222,15 @@
 					\item As we render each polygon, compare the depth of each pixel to depth in z buffer
 					\item If less, place shade of pixel in color buffer and update z buffer
 				\end{itemize}
-			
-
 		\end{itemize}
-	\subsection{Interaction}
+
 		
 \section{Three-Dimensional Graphics}
 	\subsection{Geometry}
 		\begin{itemize}
 			\item We will need three basic elements	(Scalars,Vectors,Points)
 			\item Coordinate-Free Geometry (two triangles are identical if two corresponding sides and the angle between them are identical $\rightarrow$ Physically, points exist regardless of the location of an arbitrary coordinate system)
-			\item \textbf{Scalars} can be defined as members of sets which can be combined by two operations (addition and multiplication) obeying some fundamental axioms (associativity, commutivity, inverses).
+			\item \textbf{Scalars} can be defined as members of sets which can be combined by two operations (addition and multiplication) obeying some fundamental axioms (associativity, commutativity, inverses).
 			\item physical definition: a \textbf{vector} is a quantity with two attributes (Direction,Magnitude)
 				\begin{itemize}
 					\item Every vector has an inverse	
@@ -278,8 +274,8 @@
 		\end{itemize}
 	\subsection{Representation}
 	\begin{itemize}
-		\item Lineare Independance: a set of vectors are linearly independent $\leftrightarrow \alpha_{1}v_{1}+\alpha_{2}v_{2}+\alpha_{3}v_{3} +\dots = 0$ iff $\alpha_{1}=\alpha_{2}=\alpha_{3}\dots = 0$ thats mean that no vector can be written in combination with the others
-		\item Dimension: in vector space the maximum number of l. independent vectors is fixed and is called the dimension, in an n-dimensional space any set of n linearly independent vectors form a basis, any vector v can be written in combination with basis $v_{1},v_{2},v_{3},\dots,v_{n}$ and $v= \alpha_{1}v_{1}+\alpha_{2}v_{2}+\alpha_{3}v_{3} +\dots+\alpha_{n}v_{n}$ where $\{\alpha_{i}\}$ is unique
+		\item Linear Independence: a set of vectors are linearly independent $\leftrightarrow \alpha_{1}v_{1}+\alpha_{2}v_{2}+\alpha_{3}v_{3} +\dots = 0$ iff $\alpha_{1}=\alpha_{2}=\alpha_{3}\dots = 0$ thats mean that no vector can be written in combination with the others
+		\item Dimension: in vector space the maximum number of linearly independent vectors is fixed and is called the dimension, in an n-dimensional space any set of n linearly independent vectors form a basis, any vector v can be written in combination with basis $v_{1},v_{2},v_{3},\dots,v_{n}$ and $v= \alpha_{1}v_{1}+\alpha_{2}v_{2}+\alpha_{3}v_{3} +\dots+\alpha_{n}v_{n}$ where $\{\alpha_{i}\}$ is unique
 		\item  $v= \alpha_{1}v_{1}+\alpha_{2}v_{2}+\alpha_{3}v_{3} +\dots+\alpha_{n}v_{n}$ the list of scalars $\{\alpha_{1},\alpha_{2},\alpha_{3},\dots,\alpha_{n}\} $calls representation of v with respect to the given basis, can be written in row or column
 		\item Frames: basis + origin = frame, so a frame determined by $(P,v_{1},v_{2},v_{3})$
 		\item every point and vector can be descriped in a frame, Point: $p=[\beta_{1},\beta_{2},\beta_{3}]$, Vector: $b=[\alpha_{1},\alpha_{2},\alpha_{3}]$
@@ -312,9 +308,9 @@
 			\includegraphics[scale=0.5]{pictures/scaling.jpg}
 		\end{center}		
 		\item Reflection: special case of Scaling, negative scaling variables
-		\item Inverse: compute inverse matricies of tranformation matricies, using simple oberservation we can reduce this complex step
+		\item Inverse: compute inverse matricies of transformation matricies, using simple observation we can reduce this complex step
 		\item Concatenation: if we use the same transformation for multiple verticies we can compute a overall transformation matrix using matrix multiplication and use this matrix on all vertices
-		\item Rotation about a Fixed Point: Move fixed point to origion, Rorate, move back
+		\item Rotation about a Fixed Point: Move fixed point to origin, Rotate, move back
 	\end{itemize}
 	\subsection{Transformations in OpenGL}
 	\begin{itemize}	
@@ -325,9 +321,9 @@
 			\item Projection (GL\_PROJECTION): defines the properties of the camera that views the objects in the world coordinate frame. Here you typically set the zoom factor, aspect ratio and the near and far clipping planes.
 		\end{itemize}
 		\item select with glMatrixMode one matrix for manipulation
-		\item CTM (current transformation matrix) is a part of the state, applied to all vertices that pass doen the pipeline
-		\item the last descriped operation is first exucuted so. $T+R \neq R+T$
-		\item OpelGl hast a model-view and projection matrix in the pipeline which are concatenated togester to form the CTM, manipulate independent by setting the corrent matrix mode 
+		\item CTM (current transformation matrix) is a part of the state, applied to all vertices that pass through the pipeline
+		\item the last descriped operation is first executed so. $T+R \neq R+T$
+		\item OpelGl hast a model-view and projection matrix in the pipeline which are concatenated together to form the CTM, manipulate independent by setting the current matrix mode 
 		\begin{figure}[h]
 			\hspace{2.0cm}
 			\vspace{-0.6cm}
@@ -339,10 +335,10 @@
 	\end{itemize}
 	\subsection{Building Models}
 	\begin{itemize}
-		\item Simple: Build a Mesh with Polygons, Problem: ineffcient and unstructured
-		\item Better: look for datastructures that separate the geometry (locations of vertices) from the topology (organizazion of the vertices and edges)
+		\item Simple: Build a Mesh with Polygons, Problem: inefficient and unstructured
+		\item Better: look for data structures that separate the geometry (locations of vertices) from the topology (organization of the vertices and edges)
 		\item Vertex List: geometry in array, use pointers from the vertices into this array; Problem: Shared edges in a polygon would drawn twice
-		\item Edge List: descriping edges with verticies
+		\item Edge List: describing edges with verticies
 		\item General Problems with this Approach: many function calls, much more calls if using texture and lightning
 		\item OpenGL provides Vertex Arrays that allow us to store ata in the implementation 
 		\item glDrawElement on indices would replace all glVertex and glColor calls so we have only one function call
@@ -351,13 +347,13 @@
 	 \subsection{Classical Viewing}
 	\begin{itemize}
 		\item basic elements: Objects, viewer with a projection surface, Projectors(from objects to surface)
-		\item classival views are based on relationships between them
-		\item objects are assumed to constructed from fla principal faces
+		\item classical views are based on relationships between them
+		\item objects are assumed to constructed from flat principal faces
 	\end{itemize}
 	\subsubsection{Planar Geometric Projections}
-	\subsubsection{prallel}
+	\subsubsection{parallel}
 	\begin{itemize}
-		\item multiview orthographic
+		\item multi view orthographic
 		\begin{itemize}
 			\item projectors are orthogonal to projection surface
 			\item projection plan parallel to principal face
@@ -367,9 +363,9 @@
 		\end{itemize}
 		\item axonometric
 		\begin{itemize}
-			\item allow projection plane to move realtive to object
+			\item allow projection plane to move relative to object
 			\item classify by how many angles of a corner of a projected cube are the same (none: trimetric, two: dimetric, three: isometric)
-			\item advantages and disadvantages: lines are scaled but can find scaling factors, line preserved but angles are not, can see principal faces of box-like object, some optical 				illusions are possible, does not look real
+			\item advantages and disadvantages: lines are scaled but can find scaling factors, line preserved but angles are not, can see principal faces of box-like object, some optical illusions are possible, does not look real
 		\end{itemize}
 		\item oblique
 		\begin{itemize}
@@ -381,7 +377,7 @@
 	\subsubsection{perspective}
 	projectors converge at center of projection
 	\begin{itemize}
-		\item vanishing points: prallel lines on the object converge at a single point in the projection
+		\item vanishing points: parallel lines on the object converge at a single point in the projection
 		\item drawing simple perspectives by hand uses these vanishing points
 		\item three-point perspective
 		\begin{itemize}
@@ -398,12 +394,12 @@
 			\item one principal face parallel to projection plane
 			\item one vanishing point for cube
 		\end{itemize}
-		\item advatages and disadvantages: obejects further from viewer are projected smaler than the same sized objects closer to the viewer, equal distances along a line are not 				projected into equal distances, angles preserved only in planes parallel to the projection plane, difficult to construct by hand
+		\item advantages and disadvantages: objects further from viewer are projected smaller than the same sized objects closer to the viewer, equal distances along a line are not projected into equal distances, angles preserved only in planes parallel to the projection plane, difficult to construct by hand
 	\end{itemize}
 
 	\subsection{Computer Viewing}
 	three aspects implemented in the pipeline: positioning the camera(model-view matrix); selecting a lens(projection matrix); clipping(view volume)
-	\subsection{Parallel Rendering}
+
 
 \section{Projection}
 \subsection{Normalization}
@@ -411,7 +407,7 @@
 	\item convert all projections to orthogonal projections
 	\item Why?
 	\begin{itemize}
-		\item allows for a single pipeline perspective and orthogonal viewin0g
+		\item allows for a single pipeline perspective and orthogonal viewing
 		\item stays in 4D homogeneous coordinates as long as possible $\rightarrow$ retain 3D informations (for hidden-surface and shading)
 		\item simplifies clipping
 	\end{itemize}
@@ -421,8 +417,8 @@
 
 \section{Shading}
 \begin{itemize}
-	\item light-material interactions cause each point to have diffrent color or shade
-	\item need to consider: light sources, material properties, location of viewer, surface oriantation
+	\item light-material interactions cause each point to have different color or shade
+	\item need to consider: light sources, material properties, location of viewer, surface orientation
 	\item scattering: light strikes surface $\rightarrow$ some scattered, some absorbed $\rightarrow$  scattered light strikes other surface and so on
 	\item rendering equation
 	\begin{itemize} 
@@ -431,7 +427,7 @@
 		\item cannot be solved in general, ray tracing is special case for perfectly reflecting surfaces
 		\item $I(x,x')=g(x,x')[ \epsilon (x,x')+ \int_s \rho (x,x',x'')I(x',x'')dx'']$
 		\begin{itemize}
-			\item $I(x,x')$ Intesity of light from $x'$ to $x$
+			\item $I(x,x')$ Intensity of light from $x'$ to $x$
 			\item $g(x,x')$ Visibility function between $x$ an $x'$
 			\item $\epsilon(x,x')$ Transfer emittance from $x'$ to $x$
 			\item $\rho(x,x')$ Scattering term with respect tp direction $x'$ and $x''$
@@ -442,13 +438,13 @@
 	\item local vs global rendering
 	\begin{itemize}
 		\item correct shading requires global calculation involving all objects and light sources(incompatible with pipeline)
-		\item many technics for approximating global effects $\rightarrow$ objects "look right"
+		\item many techniques for approximating global effects $\rightarrow$ objects "look right"
 	\end{itemize}
 	\item light-material interaction
 	\begin{itemize}
-		\item light strikes object, is partially absorbend and reflected
+		\item light strikes object, is partially absorbed and reflected
 		\item amount of reflected light determines color and brightness
-		\item reflected light scattered in a manner that depends on smoothness and oriantion of the surface
+		\item reflected light scattered in a manner that depends on smoothness and orientation of the surface
 	\end{itemize}
 	\item light sources
 	\begin{itemize}
@@ -461,12 +457,12 @@
 	\item phong model
 	\begin{itemize}
 		\item simple model
-		\item components: diffus, specular, ambient
+		\item components: diffuse, specular, ambient
 		\item 4 vectors: to source, to viewer, normal, perfect reflector
 	\end{itemize}
 	\item ideal reflector
 	\begin{itemize}
-		\item nomal vector is determined by local oriantation, angle of incidence = angle of relection, vectors must be coplanar
+		\item normal vector is determined by local orientation, angle of incidence = angle of reflection, vectors must be coplanar
 		\item $r=2(l*n)n-l$
 	\end{itemize}
 	\item lambertian surface
@@ -478,29 +474,29 @@
 	\item specular surfaces
 	\begin{itemize}
 		\item most surfaces are neither ideal diffusers nor perfectly specular 
-		\item smooth surfaces show specular highlights due to incoming light being reflected in directions concentrated clos to the direction of a perfect reflection
+		\item smooth surfaces show specular highlights due to incoming light being reflected in directions concentrated close to the direction of a perfect reflection
 	\end{itemize}
-	\item modeling specular relections: $I_{r} \sim k_s I cos^{\alpha}\phi$, (reflected intensity, ansorbtion coef, incoming intensity, schininess coeff)
+	\item modeling specular reflections: $I_{r} \sim k_s I cos^{\alpha}\phi$, (reflected intensity, absorption coeff, incoming intensity, shininess coeff)
 	\item shininess coefficient:	values between 5 and 10 give surface that look like plastic, values of a between 100 and 200 correspond to metals
 	\item ambient light
 	\begin{itemize}
 		\item result of multiple interactions between light sources and objects
 		\item amount and color depend on color of lights and material properties of objects
 	\end{itemize}
-	\item distance terms: light from a point source that reaches surface is inversely propotional to the square of the distance
+	\item distance terms: light from a point source that reaches surface is inversely proportional to the square of the distance
 	\item light sources
 	\begin{itemize}
 		\item in phong model $\rightarrow$ add result of each light source
-		\item each light source has seperate diffuse, specular and ambient terms (no physical justification)
+		\item each light source has separate diffuse, specular and ambient terms (no physical justification)
 		\item separate red, green, blue components
 	\end{itemize}
-	\item material properties: match light source properties (nine absorbation coefficients, shininess coefficient)
+	\item material properties: match light source properties (nine absorption coefficients, shininess coefficient)
 	\item modified phong model
 	\begin{itemize}
 		\item specular term is problematic, because it requires calculation of new reflection and view vectors for each vertex\\
 		$\rightarrow$ approximation using halfway vector (h)
 		\item $h=(l+v)/|l+v|$
-		\item l, v specified by application, problem is determing n
+		\item l, v specified by application, problem is determine n
 		\item plane normals: three points $\rightarrow$  $n=(p_2-p_0)\times(p_1-p_0)$
 		\item normal to sphere: given by gradient
 		
@@ -510,11 +506,11 @@
 		\item steps: enable shading and select model; specify normals; specify material properties; specify lights
 		\item normals: part of state, usually we want normal to have unit length so calculations are correct
 		\item front and back faces: default $\rightarrow$ only front faces are shaded, if two sided lightning $\rightarrow$ both sides are shaded, each side has its own properties
-		\item emissive term: simulate light source by giving material emissive component (uneffected by other sources)
-		\item transparancy: matrial properties specified as RGBA values (A for transparency)
+		\item emissive term: simulate light source by giving material emissive component (unaffected by other sources)
+		\item transparency: material properties specified as RGBA values (A for transparency)
 		\item efficiency: many material changes can affect performance
 		\item polygonal shading: calculation done for each vertex, default $\rightarrow$ vertex shades interpolated across the polygon
-		\item Gouraud Shading: find avarage normal at each vertex; apply modified phng model; interpolate vertex shades across each polygon\\
+		\item Gouraud Shading: find average normal at each vertex; apply modified phong model; interpolate vertex shades across each polygon\\
 			if polygon mesh approximates surfaces with high curvatures $\rightarrow$ may show edges
 		\item Phong Shading: find vertex normals, interpolate vertex normals across edges; interpolate edge normals across polygon; apply modified phong model\\
 			if polygon mesh approximates surfaces with high curvatures $\rightarrow$ may look smooth; more work (until recently not available real-time systems)
@@ -522,8 +518,8 @@
 \end{itemize}
 
 \section{Implementation}
-	\subsection{Approaches (object vs image space)}
-	\subsection{Implementing the pipeline}
+%	\subsection{Approaches (object vs image space)}
+%		\subsection{Implementing the pipeline}
 	\subsection{Clipping}
 		\begin{itemize}
 			\item Must clip out primitives that are outside the view frustum
@@ -533,7 +529,7 @@
 					\item Clipping
 					\item Rasterization or scan conversion
 					\item Transformations 
-					\item Some tasks deferred until fragement processing
+					\item Some tasks deferred until fragment processing
 				\end{itemize}
 			\item Rasterization Meta Algorithms\\(2 approaches to rendering a scene with opaque objects)
 				\begin{enumerate}
@@ -575,7 +571,7 @@
 							\item outcode(E) AND (bitwise) outcode(F) (bitwise) $\ne$ 0\\
 							(Both outcodes have a 1 bit in the same place, Line segment is outside of corresponding side of clipping window; reject)
 							\item GH and IJ: same outcodes, neither zero but logical AND yields zero\\
-							(Shorten line segment by intersecting with one of sides of window; Compute outcode of intersection (new endpoint of shortened line segment); Reexecute algorithm)
+							(Shorten line segment by intersecting with one of sides of window; Compute outcode of intersection (new endpoint of shortened line segment); Re-execute algorithm)
 						\end{enumerate}
 				\end{itemize}
 			\item Cohen Sutherland in 3D (Use 6-bit outcodes)
@@ -608,7 +604,7 @@
 				\includegraphics[scale=0.6]{pictures/NormalizedForm.jpg}
 			\end{center}
 			\item Polygon Clipping is not as simple as line segment clipping (clipping a convex polygon can yield at most one other polygon)
-			\item One strategy is to replace nonconvex (concave) polygons with a set of triangular polygons (a tessellation)
+			\item One strategy is to replace non-convex (concave) polygons with a set of triangular polygons (a tessellation)
 			\item as a Black Box (Can consider line segment clipping as a process that takes in two vertices and produces either no vertices or the vertices of a clipped line segment)
 			\item Pipeline Clipping
 				\begin{itemize}
@@ -692,15 +688,15 @@
 			\item Filling in the Frame Buffer (at end of pipeline)
 				\begin{itemize}
 					\item Convex Polygons only
-					\item Nonconvex polygons assumed to have been tessellated
+					\item Non-convex polygons assumed to have been tessellated (build non-convex polygon out of convex polygons (triangle))
 					\item Shades (colors) have been computed for vertices (Gouraud shading)
 					\item Combine with z-buffer algorithm (March across scan lines interpolating shades; Incremental work small)
 				\end{itemize}
 			\item \textbf{Flood Fill} (can be done recursively if we know a seed point located inside (WHITE)and scan convert edges into buffer in edge/inside color
 			(BLACK) $\rightarrow$ determines the area connected to a given node)
-			\item \textbf{Scan Line Fill} speeds up Flood Fill by filling lines. Instead of pushing each potential future pixel coordinate on the stack, it inspects the neighbour lines (previous and next) to find adjacent segments that may be filled in a future pass; the coordinates (either the start or the end) of the line segment are pushed on the stack. In most cases this scanline algorithm is at least an order of magnitude faster than the per-pixel one.
+			\item \textbf{Scan Line Fill} speeds up Flood Fill by filling lines. Instead of pushing each potential future pixel coordinate on the stack, it inspects the neighbor lines (previous and next) to find adjacent segments that may be filled in a future pass; the coordinates (either the start or the end) of the line segment are pushed on the stack. In most cases this scanline algorithm is at least an order of magnitude faster than the per-pixel one.
 			Efficiency: each pixel is checked once.
-			\item Antialiasing by Area Averaging (Color multiple pixels for each x depending on coverage by ideal lineg)
+			\item Anti-aliasing by Area Averaging (Color multiple pixels for each x depending on coverage by ideal line)
 			\item Aliasing problems can be serious for polygons (Jaggedness of edges + Small polygons neglected)
 		\end{itemize}
 	\subsection{Display Issues}
@@ -823,13 +819,13 @@
 	\subsection{Bitmaps and Pixel Maps}
 	\subsection{Texture Mapping}
 	\begin{itemize}
-		\item GPU can render 10 millio polygons per second, not enough for clouds, grass, terrain or skin
-		\item Example Modeling an Orange: start with orange sphere (to simple), replace sphere with a more complex shape (dimpels usw) $\rightarrow$ a lots of more polygons
+		\item GPU can render 10 mio. polygons per second, not enough for clouds, grass, terrain or skin
+		\item Example Modeling an Orange: start with orange sphere (to simple), replace sphere with a more complex shape (dimpels and so on) $\rightarrow$ a lots of more polygons
 		\item Better Approach: take picture and scan it and paste it on a sphere (texture mapping), Problem: result is smooth, workaround: bump mapping
 		\item Types of Mapping
 			\begin{itemize}
 				\item Texture Mapping: use image to fill a polygon
-				\item Enviroment (reflection mapping): use a picture of the enviroment for texture maps, allows simulation of highly specullar surfaces
+				\item Environment (reflection mapping): use a picture of the environment for texture maps, allows simulation of highly specular surfaces
 				\item Bump Mapping: emulates altering normal vectors during the rendering
 			\end{itemize}
 		\item Mapping techniques are implemented at the end of the rendering pipeline
@@ -855,7 +851,7 @@
 		\begin{center}
 			\includegraphics[scale=0.5]{pictures/cylindermapping.jpg}
 		\end{center}
-		\item Box Mapping: easy to use with simple ortographic projection, used in enviroment maps
+		\item Box Mapping: easy to use with simple orthographic projection, used in environment maps
 		\begin{center}
 			\includegraphics[scale=0.5]{pictures/boxmapping.jpg}
 		\end{center}
@@ -877,19 +873,19 @@
 	\subsection{Backgroudn}
 	\begin{itemize}
 		\item Two Components: Vertex shaders, Fragment shaders
-		\item Geometric Data: set of vetices + type (type: point, line,polygon; vertex data: coordinates, normal bector, texutre coordinates, rgba color and so on)
-		\item Per-Vertex Ops: vertex location are transformed by the model-view matrix into eye coordinates, nromals must be transformed with the inferve transpose of the model-view matrix
-		\item Primitive Assembly: vertices are next to assembled into objects, transformation by projection matrix, clipping (against user defined planes, view volume), perspective diviison, viewport maping
-		\item Rasterization: geometric entitites are rasterized into framgment (fragment corresponds to a point on integer grid a displayed pixel), each fragment has a color, possibly a depth value, texture coordinates
+		\item Geometric Data: set of vetices + type (type: point, line,polygon; vertex data: coordinates, normal vector, texture coordinates, rgba color and so on)
+		\item Per-Vertex Ops: vertex location are transformed by the model-view matrix into eye coordinates, normals must be transformed with the inverse transpose of the model-view matrix
+		\item Primitive Assembly: vertices are next to assembled into objects, transformation by projection matrix, clipping (against user defined planes, view volume), perspective division, viewport mapping
+		\item Rasterization: geometric entities are rasterized into framgment (fragment corresponds to a point on integer grid a displayed pixel), each fragment has a color, possibly a depth value, texture coordinates
 		\item Vertex Processor: takes vertices (position attribute, possibly color, openGL state), produces position in clip coordinates and vertex color
 		\item Fragment Processor: takes output of rasterizer (fragments), output a fragment, fragments still go through fragments test (hidden surface removal)
 		\item Programmable Shaders: replace fixed function vertex and fragment processing by programmable processors called shaders
-		\item Modeler: outputs geometric model plus information for the renderer (specs of cam, materials, lights), differnet renders (ray tracer, radiosity)
+		\item Modeler: outputs geometric model plus information for the renderer (specs of cam, materials, lights), different renders (ray tracer, radiosity)
 	\end{itemize}
 	\subsection{Shading Languages}
 	\subsection{GLSL}
 	\begin{itemize}
-		\item Vertex Chader Application: moving vertices (morphing, wave motion, fractals), lightning (more realistic models, cartoon shaders)
+		\item Vertex Shader Application: moving vertices (morphing, wave motion, fractals), lightning (more realistic models, cartoon shaders)
 		\item Fragment Shader Application: per fragment lightning calculation, texture mapping
 		\item Vertex Shader Execution Model:
 		\begin{center}
@@ -902,14 +898,14 @@
 	\end{itemize}
 	\subsection{Input and Interaction}
 	\begin{itemize}
-		\item Graphical Input: devices can be described either by pyhsical properties (mouse, keyboard, trackball) or logical properties (a position, an object identifier), modes (how and when input i obtained): request or event
-		\item Devices such as the data teblet return a position directly to the os
+		\item Graphical Input: devices can be described either by physical properties (mouse, keyboard, trackball) or logical properties (a position, an object identifier), modes (how and when input i obtained): request or event
+		\item Devices such as the data tablet return a position directly to the os
 		\item Devices such as the mouse, trackball, joystick return incremental inputs (or velocities) to the OS
-		\item Logical Devices: cant tell from code, couble be keyboard, file, output from other programm
-		\item Graphical Logical Devices: locator (return postion), pick (id of an object), keyboard (string of characters), stroke (array of postions), valuator (floating number), choice (one of n item)
-		\item X Window Input: client-server model for network workstations, client: opengl program, graphics server: bitmap display with a pointing device and a keyboard
-		\item Input Modes: devices contain a trigger which used to send a signal to the os (button on mouse, pressing or relasing a key), then triggered input devices return information to os (mouse return position, keyboard returns ASCII code)
-		\item Request Mode: input provided to programm only when user triggers device 
+		\item Logical Devices: cant tell from code, couple be keyboard, file, output from other program
+		\item Graphical Logical Devices: locator (return position), pick (id of an object), keyboard (string of characters), stroke (array of positions), valuator (floating number), choice (one of n item)
+		\item X Window Input: client-server model for network workstations, client: OpenGL program, graphics server: bitmap display with a pointing device and a keyboard
+		\item Input Modes: devices contain a trigger which used to send a signal to the os (button on mouse, pressing or releasing a key), then triggered input devices return information to os (mouse return position, keyboard returns ASCII code)
+		\item Request Mode: input provided to program only when user triggers device 
 		\begin{center}
 			\includegraphics[scale = 0.5]{pictures/requestmode.jpg}
 		\end{center}
@@ -918,19 +914,19 @@
 			\includegraphics[scale=0.5]{pictures/eventmode.jpg}
 		\end{center}
 		\item Event Types: resize and expose Window, click one or more buttons on Mouse, move mouse Motion, press or release key Keyboard, Idle: no event
-		\item Callbacks: interface for event-driven input, callback function for each type of event which is recordnized by graphics system, user supplied fuction for event
+		\item Callbacks: interface for event-driven input, callback function for each type of event which is recognized by graphics system, user supplied function for event
 		\item GLUT callbacks:
 		\begin{itemize}
-			\item glutDisplayFunc: called if window first opend, reshaped, exposed or user decideds it wants to change the display (every programm must have a display callback)
+			\item glutDisplayFunc: called on window first open, reshaped, exposed or user decides it wants to change the display (every program must have a display callback)
 			\item glutMouseFunc: called if mouse event occurs
 			\item glutReshapeFunc: called if window is reshaped
 			\item glutKeyboardFunc: called if keyboard event occurs
 			\item glutIdleFunc: called if no event is in queue (animations and so on)
-			\item glutMotionFunc, glutPassiveMotionFunc: called if window was moved????(not sure)
+			\item glutMotionFunc, glutPassiveMotionFunc: called if window was moved
 		\end{itemize}
 		\item GLUT Event Loop: puts program in an infinite event loop, each pass through glut looks at events in the queue, for each event glut executes the appropriate callback function if one is defined, if no callback is defined for the event, event is ignored
-		\item Posting redisplays: many events may invoke the display callback funtion (often called redisplay) better use glutPostRedisplay() which sets flag for redisplay. Glut will check it at the end of the event loop
-		\item Animating a Display: start by clearing the window glClear(), problem: drawing of information in the frame buffer is decoupled from the display of its contet, better we can see partially drawn display (only draw what changes)
+		\item Posting redisplays: many events may invoke the display callback function (often called redisplay) better use glutPostRedisplay() which sets flag for redisplay. Glut will check it at the end of the event loop
+		\item Animating a Display: start by clearing the window glClear(), problem: drawing of information in the frame buffer is decoupled from the display of its content, better we can see partially drawn display (only draw what changes)
 		\item Double Buffering: instead of one color buffer, we use two
 		\begin{itemize}
 			\item Front Buffer: display but not written to Back Buffer
@@ -944,18 +940,18 @@
 \section{Curves and Surfaces}
 	\subsection{Representation of Curves and Surfaces}
 	\begin{itemize}
-		\item until now we worked with flat entities such as lines af flat polygons but the world isnt flat so wee need curves and curved surfaces but hardware can only deals with flat entities so we our implementation need to render them to flat primitives
-		\item Modeling with Curves: want representation taht is stable, smooth, easy to evaluate,
+		\item until now we worked with flat entities such as lines af flat polygons but the world isn't flat so wee need curves and curved surfaces but hardware can only deals with flat entities so we our implementation need to render them to flat primitives
+		\item Modeling with Curves: want representation that is stable, smooth, easy to evaluate,
 		\begin{center}
 			\includegraphics[scale=0.5]{pictures/curves.jpg}
 		\end{center}
 		\item explicit Representation: Extension from 2d curves ($y=f(x)$) to 3d curves ($y=f(x),z=g(x)$ so that $z=f(x,y)$ defines a surface) but problems with vertical lines and circles
-		\item Implicit Representation: two dimensional curve ($g(x,y)=0$) so we can define lines and circles (lines: $a*x+b*y+c=0$ and circles: $x^{2}+y^{2}-r^{2}=0$), in 3d $g(x,y,z)=0$ defines a surface, intersect two surfaces to get a curve, Problem: in general we cannot solve for points taht satisfy equation
+		\item Implicit Representation: two dimensional curve ($g(x,y)=0$) so we can define lines and circles (lines: $a*x+b*y+c=0$ and circles: $x^{2}+y^{2}-r^{2}=0$), in 3d $g(x,y,z)=0$ defines a surface, intersect two surfaces to get a curve, Problem: in general we cannot solve for points that satisfy equation
 		\item Algebraic Surface: $\sum_{i}\sum_{j}\sum_{k}x^{i}*y^{j}*z^{k}=0$, at most 10 Terms, Quadric surface $2 \geq i+j+k$, can solve intersection with ray by reducing problem to solving quadric equation
-		\item Parametric Curves: seperate quation for each spatial variable $x=x(u),y=y(u),z=z(u)$ so $p(u)=[x(u),y(u),z(u)]^{T}$ for $u_{max} \leq u \leq u_{min}$ we trace out a curve in two or three dimensions
-		\item Parametric Lines: we can normalize u to be over the interval (0,1), Line connecting two points: $p(u)=(1-u)p_{0}+u*p_{1}$, ray from p0 in the directiond d: $p(u)=p_{0}+u*d$
+		\item Parametric Curves: separate equation for each spatial variable $x=x(u),y=y(u),z=z(u)$ so $p(u)=[x(u),y(u),z(u)]^{T}$ for $u_{max} \leq u \leq u_{min}$ we trace out a curve in two or three dimensions
+		\item Parametric Lines: we can normalize u to be over the interval (0,1), Line connecting two points: $p(u)=(1-u)p_{0}+u*p_{1}$, ray from p0 in the directions d: $p(u)=p_{0}+u*d$
 		\item Parametric Surfaces: require two parameter $x=x(u,v), y=y(u,v), z=z(u,z)$ so $p(u,v)=[x(u,v),y(u,v),z(u,v)]$
-		\item we can differentittate with respect to u and v to obain the normal at any point p
+		\item we can differentiate with respect to u and v to obtain the normal at any point p
 		\item Parametric Planes:
 		\begin{center}
 			\includegraphics[scale=0.5]{pictures/parametricplanes.jpg}
@@ -965,7 +961,7 @@
 			\includegraphics[scale=0.5]{pictures/parametricsphere.jpg}
 		\end{center}
 		\item Curve Segments: after normalizing u, each curve is written $p(u)=[x(u),y(u),z(u)]^{T}, 1 \leq u \leq 0$
-		\item its better to design small connected curve segements
+		\item its better to design small connected curve segments
 		\begin{center}
 			\includegraphics[scale=0.5]{pictures/connectedcurvesegments.jpg}
 		\end{center}
@@ -974,7 +970,7 @@
 			\includegraphics[scale=0.5]{pictures/parametricpolynomialcurves.jpg}
 		\end{center}
 		\item Why Polynomials: easy to evaluate, continuous and differentiable everywhere
-		\item Cubic Parametric Polynomials: if N=M=L=3 gives balance between ease of evaluation and flexibilityy in design $p(u) = \sum_{k=0}^{3} c_{k} u^{k}$ where p can be any of  x,y,z
+		\item Cubic Parametric Polynomials: if N=M=L=3 gives balance between ease of evaluation and flexibility in design $p(u) = \sum_{k=0}^{3} c_{k} u^{k}$ where p can be any of  x,y,z
 		\item Cubic Polynomial Surfaces:
 		\begin{center}
 			\includegraphics[scale=0.5]{pictures/cubicpolynomialsurfaces.jpg}
@@ -1008,8 +1004,8 @@
 			\includegraphics[scale=0.5]{pictures/hermitematrix.jpg} \\
 			\includegraphics[scale=0.5]{pictures/hermiteblending.jpg}
 		\end{center}
-		\item We can require the derivatives of x,y and z to each be continuous at joind points
-		\item Alternateley we can only require that the tangents of the resulting curve be continuous
+		\item We can require the derivatives of x,y and z to each be continuous at joined points
+		\item Alternately we can only require that the tangents of the resulting curve be continuous
 	\end{itemize}
 	\subsection{Bézier Curves and Surfaces}
 	\begin{itemize}
@@ -1020,7 +1016,7 @@
 			\includegraphics[scale=0.5]{pictures/beziermatrix.jpg} \\
 			\includegraphics[scale=0.5]{pictures/bezierfunction.jpg}
 		\end{center}
-		\item Bernstein Polynomials: blending function are a special case of the Berstein polynomials $b_{kd} = \frac{d!}{k!(d-k)!}u^{k}(1-u)^{d-k}$, all zeros at 0 and 1, for any degreee they all sum to 1, they are all between 0 and 1 inside (0,1), all Bezier curves lie in the convex hull of their control points
+		\item Bernstein Polynomials: blending function are a special case of the Berstein polynomials $b_{kd} = \frac{d!}{k!(d-k)!}u^{k}(1-u)^{d-k}$, all zeros at 0 and 1, for any degree they all sum to 1, they are all between 0 and 1 inside (0,1), all Bezier curves lie in the convex hull of their control points
 		\item Same Idea for Patches
 		\item Analysis: looks really good, better with higher order bezier, and apply different conditions
 	\end{itemize}
@@ -1033,32 +1029,32 @@
 \section{Radiosity}
 \begin{itemize}
 	\item ray tracing is best with many highly specular surfaces (unrealistic for real scenes)
-	\item rendering equation descripes general shading problem
+	\item rendering equation describes general shading problem
 	\item radiosity solves rendering equation for perfectly diffuse surfaces
 \end{itemize}
 \subsection{terminology}
 \begin{itemize}
 	\item TODO
 \end{itemize}
-\subsection{redering equation}
+\subsection{rendering equation}
 \begin{itemize}
 	\item is energy balanced
 	\item integrate over hemisphere
 	\item fredholm integral equation
 	\item TODO: PIC 
 	\item various approximations of $\rho$ give standard rendering models
-	\item occlusion term to account for other objects blocking licht from reaching surface
+	\item occlusion term to account for other objects blocking light from reaching surface
 \end{itemize}
 \subsection{radiosity}
 \begin{itemize}
 	\item consider objects broken up into flat patches
 	\item assume that patches are perfectly diffuse reflectors
-	\item radiosity = flux = energy/unit area/unit time leavin patch
+	\item radiosity = flux = energy/unit area/unit time leaving patch
 \end{itemize}
 \subsection{hemisphere}
 \begin{itemize}
 	\item use illuminating hemisphere
-	\item center hemisphere on patch wirh nomal pointung up
+	\item center hemisphere on patch with normal pointing up
 	\item must shift hemisphere for each point on patch
 \end{itemize}
 \subsection{hemicube}
@@ -1066,7 +1062,7 @@
 	\item easier to use instead of hemisphere
 	\item rule each side into pixels
 	\item easier to project pixels which give delta form factors that can be added up to gice desired form factor
-	\item to get a delto form factor, only cast a ray throgh each pixel
+	\item to get a delta form factor, only cast a ray through each pixel
 \end{itemize}
 \subsection{instant radiosity}
 \begin{itemize}
@@ -1080,7 +1076,7 @@
 \section{Parallel Rendering}
 \subsection{Why?}
 \begin{itemize}
-	\item standard rendering pipeline may not be sufficent
+	\item standard rendering pipeline may not be sufficient
 	\item use commodity components to build a system that can render in parallel
 	\item use standard network to connect
 \end{itemize}
@@ -1088,7 +1084,7 @@
 \begin{itemize}
 	\item need solution comparable to data set to see detail (Ocean Data, CT)
 	\item solution: multiple projectors (commodity, high-end)
-	\item inexpensive soultion
+	\item inexpensive solution
 	\item problems: bezels, color matching, alignment, syncing
 \end{itemize}
 \subsubsection{Tiled Display Wall}
@@ -1132,7 +1128,7 @@ Transform $\rightarrow$ Clip  $\rightarrow$ Project/Sort  $\rightarrow$ Rastariz
 	\item not available for writing directly
 	\item place to holt and compute on pixel data
 	\item operations: load contents of a color buffer, accumulate the contents of a color buffer, return buffer contents to a color buffer, add or multiply all pixel values
-	\item use: improve scene qualitiy (motion blur, depth of field, soft shadows, scene antialising, bump mapping)
+	\item use: improve scene quality (motion blur, depth of field, soft shadows, scene antialising, bump mapping)
 \end{itemize}
 
 \section{visualization of implicit functions}
@@ -1145,19 +1141,10 @@ Transform $\rightarrow$ Clip  $\rightarrow$ Project/Sort  $\rightarrow$ Rastariz
 \subsection{height fields and contours}
 \begin{itemize}
 	\item in many applications, heights by function of the form $z=f(x,y)$
-	\item to find alle the points that have given $c$, have to solve $g(x,y)=f(x,y)-c=0$
+	\item to find all the points that have given $c$, have to solve $g(x,y)=f(x,y)-c=0$
 	\item functions determines the isosurfaces or contours of $f$ for the isosurface value $c$
 \end{itemize}
 \subsection{marching squares}
-\subsection{displaying implicit functions}
-\begin{itemize}
-	\item TODO
-	\item 
-	\item 
-\end{itemize}
-\subsection{matching cubes}
-TODO...
-
 \section{shadows}
 \begin{itemize}
 	\item important visual cue for realism
@@ -1173,7 +1160,7 @@ end{itemize}
 	\item make shadow polygons $\rightarrow$ squash shadow caster onto the plane
 	\item draw shadow polygons with ambient light only
 	\item light can be infinite or local
-	\item sqaushing done by multiplying transformation to model view matrix
+	\item squashing done by multiplying transformation to model view matrix
 	\item one pass for each shadowed plane
 	\item algorithm:
 	\begin{itemize}
