@@ -205,9 +205,7 @@
 			\item default: smooth shading (OpenGL interpolates vertex colors across visible polygons)
 
 			\item Alternative: flat shading (Color of first vertex, determines fill color)
-			\begin{center}
-				\includegraphics[scale=0.3]{pictures/smathfloothshading.jpg}
-			\end{center}
+
 			\item glViewport(x,y,w,h) - Values in pixels (screen coordinates, x and y upper left edge of window, wh width and hight of window)
 			\item going to 3D means not much changes\\
 			(Use glVertex3*(), Have to worry about the order in which polygons are drawn or use hidden-surface removal)
@@ -1032,16 +1030,14 @@
 	\item rendering equation describes general shading problem
 	\item radiosity solves rendering equation for perfectly diffuse surfaces
 \end{itemize}
-\subsection{terminology}
-\begin{itemize}
-	\item TODO
-\end{itemize}
 \subsection{rendering equation}
 \begin{itemize}
 	\item is energy balanced
 	\item integrate over hemisphere
-	\item fredholm integral equation
-	\item TODO: PIC 
+	\item fredholm integral equationto
+	\begin{center}
+		\includegraphics[scale=0.7]{pictures/rendering_equation.PNG}
+	\end{center}
 	\item various approximations of $\rho$ give standard rendering models
 	\item occlusion term to account for other objects blocking light from reaching surface
 \end{itemize}
@@ -1117,7 +1113,9 @@ Transform $\rightarrow$ Clip  $\rightarrow$ Project/Sort  $\rightarrow$ Rastariz
 \subsubsection{sorting pradigm}
 \begin{itemize}
 	\item each projector is responsible for one area of the screen $\rightarrow$ sort primitives and assign them to proper screen	
-	\item rendering methods TODO: PICTURE
+	\begin{center}
+		\includegraphics[scale=1]{pictures/sort.PNG}
+	\end{center}
 	\item sort first: appealing and easy to implement
 	\item sort middle: used in hardware pipelines, more difficult to implement with add-on commodity cards
 	\item sort last: easy to implement with a compositing stage, high network traffic
